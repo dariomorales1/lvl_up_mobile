@@ -1,0 +1,1194 @@
+{	
+	"productos": [
+    {
+        "Código": "JM001",
+        "Nombre": "Catan",
+        "Precio": "29.990 CLP",
+        "Descripción Corta": "Juego de mesa de estrategia donde los jugadores colonizan una isla, construyen pueblos y comercian recursos para expandirse.",
+        "Descripción Larga": "Juego de mesa de estrategia donde los jugadores colonizan una isla, construyen pueblos y comercian recursos para expandirse. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "149",
+        "Especificaciones": [
+        "Incluye instrucciones en español",
+        "Tiempo de juego 45–90 min (aprox.)",
+        "Para múltiples jugadores"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Juegos/catan.jpg"
+    },
+    {
+        "Código": "JM002",
+        "Nombre": "Carcassonne",
+        "Precio": "24.990 CLP",
+        "Descripción Corta": "Clásico juego de losetas en el que los jugadores construyen ciudades medievales, caminos y campos para sumar puntos.",
+        "Descripción Larga": "Clásico juego de losetas en el que los jugadores construyen ciudades medievales, caminos y campos para sumar puntos. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "110",
+        "Especificaciones": [
+        "Alta rejugabilidad",
+        "Para múltiples jugadores",
+        "Tiempo de juego 45–90 min (aprox.)",
+        "Componentes de calidad",
+        "Incluye instrucciones en español"
+        ],
+        "Puntuacion": "7",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Batería dura bastante (según uso)",
+        "La calidad superó mis expectativas",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/Juegos/caracasonne.jpg"
+    },
+    {
+        "Código": "JM003",
+        "Nombre": "Dixit",
+        "Precio": "22.990 CLP",
+        "Descripción Corta": "Juego creativo y narrativo con cartas ilustradas donde la imaginación es clave para adivinar y ganar puntos.",
+        "Descripción Larga": "Juego creativo y narrativo con cartas ilustradas donde la imaginación es clave para adivinar y ganar puntos. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "42",
+        "Especificaciones": [
+        "Componentes de calidad",
+        "Alta rejugabilidad",
+        "Para múltiples jugadores"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Batería dura bastante (según uso)",
+        "Llegó rápido y en buen estado",
+        "Excelente para regalar"
+        ],
+        "imgLink": "assets/img/products/Juegos/dixit.jpg"
+    },
+    {
+        "Código": "JM004",
+        "Nombre": "Ticket to Ride",
+        "Precio": "34.990 CLP",
+        "Descripción Corta": "Juego de estrategia en el que los jugadores compiten por construir rutas ferroviarias a través del mapa.",
+        "Descripción Larga": "Juego de estrategia en el que los jugadores compiten por construir rutas ferroviarias a través del mapa. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "65",
+        "Especificaciones": [
+        "Alta rejugabilidad",
+        "Tiempo de juego 45–90 min (aprox.)",
+        "Componentes de calidad",
+        "Para múltiples jugadores",
+        "Incluye instrucciones en español"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Buen producto por el precio",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/Juegos/ticket.jpg"
+    },
+    {
+        "Código": "JM005",
+        "Nombre": "Risk",
+        "Precio": "27.990 CLP",
+        "Descripción Corta": "Juego de conquista mundial donde los jugadores despliegan ejércitos, atacan territorios y buscan dominar el mapa.",
+        "Descripción Larga": "Juego de conquista mundial donde los jugadores despliegan ejércitos, atacan territorios y buscan dominar el mapa. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "96",
+        "Especificaciones": [
+        "Incluye instrucciones en español",
+        "Alta rejugabilidad",
+        "Componentes de calidad"
+        ],
+        "Puntuacion": "1",
+        "Comentarios": [
+        "Buen producto por el precio",
+        "Rinde muy bien en juegos",
+        "Batería dura bastante (según uso)"
+        ],
+        "imgLink": "assets/img/products/Juegos/risk.jpg"
+    },
+    {
+        "Código": "JM006",
+        "Nombre": "Monopoly Gamer Edition",
+        "Precio": "31.990 CLP",
+        "Descripción Corta": "Versión temática de Monopoly inspirada en videojuegos, con personajes y poderes especiales para cada jugador.",
+        "Descripción Larga": "Versión temática de Monopoly inspirada en videojuegos, con personajes y poderes especiales para cada jugador. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "169",
+        "Especificaciones": [
+        "Componentes de calidad",
+        "Alta rejugabilidad",
+        "Para múltiples jugadores"
+        ],
+        "Puntuacion": "10",
+        "Comentarios": [
+        "Batería dura bastante (según uso)",
+        "Rinde muy bien en juegos"
+        ],
+        "imgLink": "assets/img/products/Juegos/monopoly.jpg"
+    },
+    {
+        "Código": "AC001",
+        "Nombre": "Controlador Inalámbrico Xbox Series X",
+        "Precio": "59.990 CLP",
+        "Descripción Corta": "Mando inalámbrico de Xbox con gatillos texturizados, mejor ergonomía y conexión rápida para consolas y PC.",
+        "Descripción Larga": "Mando inalámbrico de Xbox con gatillos texturizados, mejor ergonomía y conexión rápida para consolas y PC. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "173",
+        "Especificaciones": [
+        "Diseño pensado para uso prolongado",
+        "Fácil configuración",
+        "Conectividad estable",
+        "Materiales resistentes"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "Se nota la diferencia en rendimiento",
+        "Tal como en la descripción"
+        ],
+        "imgLink": "assets/img/products/Accesorios/control-xbox.jpg"
+    },
+    {
+        "Código": "AC002",
+        "Nombre": "Auriculares Gamer HyperX Cloud II",
+        "Precio": "79.990 CLP",
+        "Descripción Corta": "Audífonos con sonido envolvente 7.1, micrófono desmontable y almohadillas de espuma viscoelástica para máxima comodidad.",
+        "Descripción Larga": "Audífonos con sonido envolvente 7.1, micrófono desmontable y almohadillas de espuma viscoelástica para máxima comodidad. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "190",
+        "Especificaciones": [
+        "Diadema acolchada",
+        "Sonido envolvente (virtual)",
+        "Almohadillas cómodas",
+        "Micrófono desmontable"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "La calidad superó mis expectativas",
+        "Tal como en la descripción",
+        "Rinde muy bien en juegos",
+        "Buen producto por el precio"
+        ],
+        "imgLink": "assets/img/products/Accesorios/hyperx-cloud2.jpg"
+    },
+    {
+        "Código": "AC003",
+        "Nombre": "Teclado Mecánico Razer BlackWidow V3",
+        "Precio": "119.990 CLP",
+        "Descripción Corta": "Teclado gamer con switches mecánicos Razer, retroiluminación RGB y funciones programables para una experiencia profesional.",
+        "Descripción Larga": "Teclado gamer con switches mecánicos Razer, retroiluminación RGB y funciones programables para una experiencia profesional. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "55",
+        "Especificaciones": [
+        "Switches mecánicos",
+        "Construcción robusta",
+        "Iluminación RGB",
+        "Software de personalización"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Empaque bien protegido",
+        "Me encantó el diseño",
+        "Excelente para regalar"
+        ],
+        "imgLink": "assets/img/products/Accesorios/teclado-razer.jpg"
+    },
+    {
+        "Código": "AC004",
+        "Nombre": "Volante Logitech G29 Driving Force",
+        "Precio": "299.990 CLP",
+        "Descripción Corta": "Volante con pedales de freno, acelerador y embrague, ideal para simuladores de carreras en PS y PC.",
+        "Descripción Larga": "Volante con pedales de freno, acelerador y embrague, ideal para simuladores de carreras en PS y PC. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "70",
+        "Especificaciones": [
+        "Fijación segura a escritorio",
+        "Compatibilidad con simuladores",
+        "Pedales incluidos",
+        "Agarre antideslizante",
+        "Rotación personalizable"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Empaque bien protegido",
+        "Tal como en la descripción",
+        "Buen producto por el precio",
+        "Se nota la diferencia en rendimiento"
+        ],
+        "imgLink": "assets/img/products/Accesorios/volante-logitech.jpg"
+    },
+    {
+        "Código": "AC005",
+        "Nombre": "Webcam Logitech StreamCam",
+        "Precio": "149.990 CLP",
+        "Descripción Corta": "Cámara Full HD 1080p a 60fps, diseñada para streamers y creadores de contenido con autoenfoque inteligente.",
+        "Descripción Larga": "Cámara Full HD 1080p a 60fps, diseñada para streamers y creadores de contenido con autoenfoque inteligente. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "142",
+        "Especificaciones": [
+        "Montaje flexible",
+        "Micrófonos integrados",
+        "Autoenfoque"
+        ],
+        "Puntuacion": "1",
+        "Comentarios": [
+        "Tal como en la descripción",
+        "Empaque bien protegido",
+        "Se nota la diferencia en rendimiento"
+        ],
+        "imgLink": "assets/img/products/Accesorios/webcam-logitech.jpg"
+    },
+    {
+        "Código": "AC006",
+        "Nombre": "Base de Carga DualSense PS5",
+        "Precio": "39.990 CLP",
+        "Descripción Corta": "Base oficial de PlayStation para cargar hasta dos controles DualSense simultáneamente.",
+        "Descripción Larga": "Base oficial de PlayStation para cargar hasta dos controles DualSense simultáneamente. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "192",
+        "Especificaciones": [
+        "Cable de alimentación incluido",
+        "Carga simultánea de 2 controles",
+        "Conexión simple"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Excelente para regalar",
+        "Materiales de buena calidad",
+        "La calidad superó mis expectativas"
+        ],
+        "imgLink": "assets/img/products/Accesorios/dualsense-cargador.jpg"
+    },
+    {
+        "Código": "CO001",
+        "Nombre": "PlayStation 5",
+        "Precio": "549.990 CLP",
+        "Descripción Corta": "Consola de nueva generación con gráficos 4K, SSD ultrarrápido y el innovador control DualSense.",
+        "Descripción Larga": "Consola de nueva generación con gráficos 4K, SSD ultrarrápido y el innovador control DualSense. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "165",
+        "Especificaciones": [
+        "Aplicación complementaria",
+        "Haptic feedback/gatillos adaptativos (PS5)",
+        "Share/stream integrado",
+        "Audio 3D (según título)"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "Se nota la diferencia en rendimiento"
+        ],
+        "imgLink": "assets/img/products/Consolas/ps5.jpg"
+    },
+    {
+        "Código": "CO002",
+        "Nombre": "Xbox Series X",
+        "Precio": "529.990 CLP",
+        "Descripción Corta": "La consola más potente de Microsoft, con soporte para 4K nativo, Quick Resume y retrocompatibilidad total.",
+        "Descripción Larga": "La consola más potente de Microsoft, con soporte para 4K nativo, Quick Resume y retrocompatibilidad total. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "54",
+        "Especificaciones": [
+        "App de acompañamiento",
+        "Servicios de suscripción disponibles",
+        "Quick Resume"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Se siente resistente y cómodo",
+        "Se nota la diferencia en rendimiento",
+        "Excelente para regalar",
+        "Tal como en la descripción"
+        ],
+        "imgLink": "assets/img/products/Consolas/xbox-seriesx.jpg"
+    },
+    {
+        "Código": "CO003",
+        "Nombre": "Nintendo Switch OLED",
+        "Precio": "399.990 CLP",
+        "Descripción Corta": "Consola híbrida con pantalla OLED de 7 pulgadas, colores vibrantes y soporte portátil o de sobremesa.",
+        "Descripción Larga": "Consola híbrida con pantalla OLED de 7 pulgadas, colores vibrantes y soporte portátil o de sobremesa. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "133",
+        "Especificaciones": [
+        "Modo portátil y sobremesa (según modelo)",
+        "Batería de larga duración",
+        "Controles integrados/compatibles",
+        "Pantalla de calidad",
+        "Catálogo familiar"
+        ],
+        "Puntuacion": "8",
+        "Comentarios": [
+        "Se siente resistente y cómodo",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Consolas/switch.jpg"
+    },
+    {
+        "Código": "CO004",
+        "Nombre": "PlayStation 4 Slim 1TB",
+        "Precio": "329.990 CLP",
+        "Descripción Corta": "Versión ligera y estilizada de PS4 con 1TB de almacenamiento y acceso a una gran biblioteca de juegos.",
+        "Descripción Larga": "Versión ligera y estilizada de PS4 con 1TB de almacenamiento y acceso a una gran biblioteca de juegos. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "151",
+        "Especificaciones": [
+        "Aplicación complementaria",
+        "Tienda digital",
+        "Share/stream integrado",
+        "Audio 3D (según título)"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Tal como en la descripción",
+        "La calidad superó mis expectativas"
+        ],
+        "imgLink": "assets/img/products/Consolas/ps4.jpg"
+    },
+    {
+        "Código": "CO005",
+        "Nombre": "Xbox Series S",
+        "Precio": "299.990 CLP",
+        "Descripción Corta": "Consola compacta de Microsoft con soporte para juegos digitales en 1440p y tecnología de nueva generación.",
+        "Descripción Larga": "Consola compacta de Microsoft con soporte para juegos digitales en 1440p y tecnología de nueva generación. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "165",
+        "Especificaciones": [
+        "Audio espacial",
+        "Quick Resume",
+        "Retrocompatibilidad",
+        "Servicios de suscripción disponibles",
+        "App de acompañamiento"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "La calidad superó mis expectativas",
+        "Buen producto por el precio"
+        ],
+        "imgLink": "assets/img/products/Consolas/xbox-seriess.jpg"
+    },
+    {
+        "Código": "CO006",
+        "Nombre": "Nintendo Switch Lite",
+        "Precio": "229.990 CLP",
+        "Descripción Corta": "Versión portátil de la Nintendo Switch, ligera y perfecta para jugar en cualquier lugar.",
+        "Descripción Larga": "Versión portátil de la Nintendo Switch, ligera y perfecta para jugar en cualquier lugar. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "195",
+        "Especificaciones": [
+        "Controles integrados/compatibles",
+        "Modo portátil y sobremesa (según modelo)",
+        "Pantalla de calidad"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Se nota la diferencia en rendimiento",
+        "Rinde muy bien en juegos",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/Consolas/switch-lite.jpg"
+    },
+    {
+        "Código": "CG001",
+        "Nombre": "PC Gamer ASUS ROG Strix",
+        "Precio": "1.299.990 CLP",
+        "Descripción Corta": "Computador gamer de escritorio con hardware de alto rendimiento diseñado para gaming competitivo.",
+        "Descripción Larga": "Computador gamer de escritorio con hardware de alto rendimiento diseñado para gaming competitivo. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "109",
+        "Especificaciones": [
+        "Memoria rápida",
+        "Conectividad Wi‑Fi",
+        "CPU de alto rendimiento"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Me encantó el diseño",
+        "Tal como en la descripción",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Computadores/asus-rog-strix.png"
+    },
+    {
+        "Código": "CG002",
+        "Nombre": "PC Gamer MSI Infinite X",
+        "Precio": "1.499.990 CLP",
+        "Descripción Corta": "PC gamer con chasis de alto flujo de aire, procesador Intel de última generación y tarjeta gráfica dedicada.",
+        "Descripción Larga": "PC gamer con chasis de alto flujo de aire, procesador Intel de última generación y tarjeta gráfica dedicada. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "66",
+        "Especificaciones": [
+        "CPU de alto rendimiento",
+        "GPU dedicada para juegos",
+        "Memoria rápida",
+        "Conectividad Wi‑Fi",
+        "Almacenamiento SSD"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Se nota la diferencia en rendimiento",
+        "Rinde muy bien en juegos"
+        ],
+        "imgLink": "assets/img/products/Computadores/msi-infiniteX.png"
+    },
+    {
+        "Código": "CG003",
+        "Nombre": "Notebook Gamer Acer Predator Helios 300",
+        "Precio": "1.199.990 CLP",
+        "Descripción Corta": "Notebook con pantalla de 144Hz, GPU NVIDIA y sistema de refrigeración avanzado para sesiones intensas.",
+        "Descripción Larga": "Notebook con pantalla de 144Hz, GPU NVIDIA y sistema de refrigeración avanzado para sesiones intensas. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "148",
+        "Especificaciones": [
+        "Teclado retroiluminado",
+        "Chasis resistente",
+        "Autonomía adecuada",
+        "Sistema de refrigeración eficiente"
+        ],
+        "Puntuacion": "10",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Llegó rápido y en buen estado"
+        ],
+        "imgLink": "assets/img/products/Computadores/acer-predator-helios.webp"
+    },
+    {
+        "Código": "CG004",
+        "Nombre": "Notebook Gamer Lenovo Legion 5",
+        "Precio": "1.099.990 CLP",
+        "Descripción Corta": "Laptop gamer equilibrada con procesadores Ryzen, tarjeta gráfica dedicada y teclado retroiluminado.",
+        "Descripción Larga": "Laptop gamer equilibrada con procesadores Ryzen, tarjeta gráfica dedicada y teclado retroiluminado. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "155",
+        "Especificaciones": [
+        "Autonomía adecuada",
+        "Sistema de refrigeración eficiente",
+        "Teclado retroiluminado",
+        "Chasis resistente",
+        "Pantalla de alta tasa de refresco"
+        ],
+        "Puntuacion": "8",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Atención al cliente excelente",
+        "Se siente resistente y cómodo"
+        ],
+        "imgLink": "assets/img/products/Computadores/lenovo legion 5.webp"
+    },
+    {
+        "Código": "CG005",
+        "Nombre": "PC Gamer HP Omen 30L",
+        "Precio": "1.399.990 CLP",
+        "Descripción Corta": "Torre gamer con diseño elegante, componentes potentes y software de personalización Omen Command Center.",
+        "Descripción Larga": "Torre gamer con diseño elegante, componentes potentes y software de personalización Omen Command Center. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "109",
+        "Especificaciones": [
+        "GPU dedicada para juegos",
+        "Almacenamiento SSD",
+        "Conectividad Wi‑Fi",
+        "Memoria rápida",
+        "CPU de alto rendimiento"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Batería dura bastante (según uso)",
+        "Buen producto por el precio",
+        "Atención al cliente excelente"
+        ],
+        "imgLink": "assets/img/products/Computadores/hp-omen-35l.png"
+    },
+    {
+        "Código": "CG006",
+        "Nombre": "Notebook Gamer Dell Alienware M15",
+        "Precio": "1.799.990 CLP",
+        "Descripción Corta": "Laptop premium para gaming con pantalla de alta tasa de refresco y estética Alienware icónica.",
+        "Descripción Larga": "Laptop premium para gaming con pantalla de alta tasa de refresco y estética Alienware icónica. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "67",
+        "Especificaciones": [
+        "Chasis resistente",
+        "Pantalla de alta tasa de refresco",
+        "Teclado retroiluminado",
+        "Autonomía adecuada"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Tal como en la descripción",
+        "Batería dura bastante (según uso)",
+        "Se siente resistente y cómodo"
+        ],
+        "imgLink": "assets/img/products/Computadores/alienware-m15.png"
+    },
+    {
+        "Código": "SG001",
+        "Nombre": "Silla Gamer Secretlab Titan",
+        "Precio": "349.990 CLP",
+        "Descripción Corta": "Silla ergonómica de alta gama con soporte lumbar ajustable y materiales de primera calidad.",
+        "Descripción Larga": "Silla ergonómica de alta gama con soporte lumbar ajustable y materiales de primera calidad. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "163",
+        "Especificaciones": [
+        "Altura y respaldo ajustables",
+        "Estructura de acero",
+        "Cojines lumbar y cervical",
+        "Ruedas silenciosas",
+        "Tapicería resistente"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "Se nota la diferencia en rendimiento",
+        "Me encantó el diseño"
+        ],
+        "imgLink": "assets/img/products/Sillas/Secretlab-Titan.png"
+    },
+    {
+        "Código": "SG002",
+        "Nombre": "Silla Gamer Cougar Armor One",
+        "Precio": "199.990 CLP",
+        "Descripción Corta": "Silla resistente con respaldo reclinable y cojines de apoyo lumbar y cervical incluidos.",
+        "Descripción Larga": "Silla resistente con respaldo reclinable y cojines de apoyo lumbar y cervical incluidos. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "141",
+        "Especificaciones": [
+        "Ruedas silenciosas",
+        "Tapicería resistente",
+        "Altura y respaldo ajustables",
+        "Estructura de acero"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Buen producto por el precio",
+        "Empaque bien protegido",
+        "Rinde muy bien en juegos"
+        ],
+        "imgLink": "assets/img/products/Sillas/ARMOR-ONE.png"
+    },
+    {
+        "Código": "SG003",
+        "Nombre": "Silla Gamer DXRacer Formula Series",
+        "Precio": "299.990 CLP",
+        "Descripción Corta": "Modelo icónico de sillas gamer con gran confort, ajuste ergonómico y diseño de carreras.",
+        "Descripción Larga": "Modelo icónico de sillas gamer con gran confort, ajuste ergonómico y diseño de carreras. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "115",
+        "Especificaciones": [
+        "Altura y respaldo ajustables",
+        "Estructura de acero",
+        "Tapicería resistente"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Llegó rápido y en buen estado",
+        "Empaque bien protegido",
+        "Excelente para regalar"
+        ],
+        "imgLink": "assets/img/products/Sillas/Formula-Series.png"
+    },
+    {
+        "Código": "SG004",
+        "Nombre": "Silla Gamer Corsair T3 Rush",
+        "Precio": "249.990 CLP",
+        "Descripción Corta": "Silla con tapicería transpirable, reclinación ajustable y ruedas diseñadas para todo tipo de suelos.",
+        "Descripción Larga": "Silla con tapicería transpirable, reclinación ajustable y ruedas diseñadas para todo tipo de suelos. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "132",
+        "Especificaciones": [
+        "Estructura de acero",
+        "Altura y respaldo ajustables",
+        "Cojines lumbar y cervical",
+        "Tapicería resistente"
+        ],
+        "Puntuacion": "8",
+        "Comentarios": [
+        "Tal como en la descripción",
+        "Excelente para regalar"
+        ],
+        "imgLink": "assets/img/products/Sillas/corsair-t3-rush.webp"
+    },
+    {
+        "Código": "SG005",
+        "Nombre": "Silla Gamer Razer Iskur",
+        "Precio": "399.990 CLP",
+        "Descripción Corta": "Silla premium con soporte lumbar dinámico y materiales reforzados para largas horas de juego.",
+        "Descripción Larga": "Silla premium con soporte lumbar dinámico y materiales reforzados para largas horas de juego. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "172",
+        "Especificaciones": [
+        "Tapicería resistente",
+        "Ruedas silenciosas",
+        "Altura y respaldo ajustables",
+        "Estructura de acero",
+        "Cojines lumbar y cervical"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Atención al cliente excelente",
+        "Se siente resistente y cómodo",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Sillas/razer-iskur.png"
+    },
+    {
+        "Código": "SG006",
+        "Nombre": "Silla Gamer AKRacing Core EX",
+        "Precio": "279.990 CLP",
+        "Descripción Corta": "Silla gamer robusta con estructura de acero y espuma de alta densidad para máxima durabilidad.",
+        "Descripción Larga": "Silla gamer robusta con estructura de acero y espuma de alta densidad para máxima durabilidad. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "142",
+        "Especificaciones": [
+        "Tapicería resistente",
+        "Estructura de acero",
+        "Altura y respaldo ajustables",
+        "Ruedas silenciosas",
+        "Cojines lumbar y cervical"
+        ],
+        "Puntuacion": "7",
+        "Comentarios": [
+        "Buen producto por el precio",
+        "Configuración sencilla",
+        "Materiales de buena calidad"
+        ],
+        "imgLink": "assets/img/products/Sillas/akracing-core-ex.jpg"
+    },
+    {
+        "Código": "MS001",
+        "Nombre": "Mouse Gamer Logitech G502 HERO",
+        "Precio": "49.990 CLP",
+        "Descripción Corta": "Mouse gamer de alta precisión con sensor HERO, botones programables y sistema de pesas ajustable.",
+        "Descripción Larga": "Mouse gamer de alta precisión con sensor HERO, botones programables y sistema de pesas ajustable. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "136",
+        "Especificaciones": [
+        "Botones programables",
+        "Software de personalización",
+        "Diseño ergonómico",
+        "Sensor óptico de alta precisión",
+        "DPI ajustable"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Tal como en la descripción",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Mouse/g503-hero.png"
+    },
+    {
+        "Código": "MS002",
+        "Nombre": "Mouse Gamer Razer DeathAdder V2",
+        "Precio": "59.990 CLP",
+        "Descripción Corta": "Mouse ergonómico con sensor óptico avanzado y switches ópticos Razer para respuesta ultrarrápida.",
+        "Descripción Larga": "Mouse ergonómico con sensor óptico avanzado y switches ópticos Razer para respuesta ultrarrápida. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "160",
+        "Especificaciones": [
+        "Botones programables",
+        "DPI ajustable",
+        "Diseño ergonómico",
+        "Sensor óptico de alta precisión"
+        ],
+        "Puntuacion": "2",
+        "Comentarios": [
+        "Excelente para regalar",
+        "Rinde muy bien en juegos",
+        "Configuración sencilla",
+        "Materiales de buena calidad"
+        ],
+        "imgLink": "assets/img/products/Mouse/deathAdder-v2.jpg"
+    },
+    {
+        "Código": "MS003",
+        "Nombre": "Mouse Gamer SteelSeries Rival 600",
+        "Precio": "69.990 CLP",
+        "Descripción Corta": "Mouse con doble sensor para precisión de elevación y pesos laterales ajustables.",
+        "Descripción Larga": "Mouse con doble sensor para precisión de elevación y pesos laterales ajustables. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "48",
+        "Especificaciones": [
+        "Diseño ergonómico",
+        "Botones programables",
+        "DPI ajustable"
+        ],
+        "Puntuacion": "9",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Empaque bien protegido"
+        ],
+        "imgLink": "assets/img/products/Mouse/rival-600.png"
+    },
+    {
+        "Código": "MS004",
+        "Nombre": "Mouse Gamer Corsair Dark Core RGB Pro",
+        "Precio": "79.990 CLP",
+        "Descripción Corta": "Mouse inalámbrico de alto rendimiento con iluminación RGB y conectividad versátil.",
+        "Descripción Larga": "Mouse inalámbrico de alto rendimiento con iluminación RGB y conectividad versátil. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "130",
+        "Especificaciones": [
+        "Software de personalización",
+        "Botones programables",
+        "DPI ajustable",
+        "Sensor óptico de alta precisión",
+        "Diseño ergonómico"
+        ],
+        "Puntuacion": "2",
+        "Comentarios": [
+        "Tal como en la descripción",
+        "Colores muy fieles",
+        "Se siente resistente y cómodo",
+        "Me encantó el diseño"
+        ],
+        "imgLink": "assets/img/products/Mouse/dark-core.png"
+    },
+    {
+        "Código": "MS005",
+        "Nombre": "Mouse Gamer Glorious Model O",
+        "Precio": "89.990 CLP",
+        "Descripción Corta": "Mouse ultraligero con diseño de panal, cable flexible y deslizamiento suave.",
+        "Descripción Larga": "Mouse ultraligero con diseño de panal, cable flexible y deslizamiento suave. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "53",
+        "Especificaciones": [
+        "Botones programables",
+        "Software de personalización",
+        "Diseño ergonómico",
+        "DPI ajustable",
+        "Sensor óptico de alta precisión"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Tal como en la descripción",
+        "Atención al cliente excelente",
+        "Materiales de buena calidad"
+        ],
+        "imgLink": "assets/img/products/Mouse/glorious-model-0.png"
+    },
+    {
+        "Código": "MS006",
+        "Nombre": "Mouse Gamer ASUS ROG Gladius III",
+        "Precio": "99.990 CLP",
+        "Descripción Corta": "Mouse de precisión con switches intercambiables y sensor óptico de última generación.",
+        "Descripción Larga": "Mouse de precisión con switches intercambiables y sensor óptico de última generación. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "102",
+        "Especificaciones": [
+        "DPI ajustable",
+        "Software de personalización",
+        "Diseño ergonómico",
+        "Botones programables",
+        "Sensor óptico de alta precisión"
+        ],
+        "Puntuacion": "8",
+        "Comentarios": [
+        "Se siente resistente y cómodo",
+        "Se nota la diferencia en rendimiento",
+        "Me encantó el diseño"
+        ],
+        "imgLink": "assets/img/products/Mouse/gladius-3.png"
+    },
+    {
+        "Código": "MP001",
+        "Nombre": "Mousepad Razer Goliathus Extended Chroma",
+        "Precio": "29.990 CLP",
+        "Descripción Corta": "Alfombrilla extendida con iluminación RGB perimetral y superficie optimizada para control y velocidad.",
+        "Descripción Larga": "Alfombrilla extendida con iluminación RGB perimetral y superficie optimizada para control y velocidad. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "163",
+        "Especificaciones": [
+        "Compatible con sensores óptico y láser",
+        "Base de goma antideslizante",
+        "Costuras reforzadas"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Empaque bien protegido",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/MousePad/goliathus-extended-chroma.png"
+    },
+    {
+        "Código": "MP002",
+        "Nombre": "Mousepad Logitech G840 XL",
+        "Precio": "34.990 CLP",
+        "Descripción Corta": "Mousepad extragrande para teclado y mouse, superficie uniforme y base de goma antideslizante.",
+        "Descripción Larga": "Mousepad extragrande para teclado y mouse, superficie uniforme y base de goma antideslizante. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "39",
+        "Especificaciones": [
+        "Formato XL/extendido",
+        "Base de goma antideslizante",
+        "Costuras reforzadas"
+        ],
+        "Puntuacion": "8",
+        "Comentarios": [
+        "Colores muy fieles",
+        "Atención al cliente excelente"
+        ],
+        "imgLink": "assets/img/products/MousePad/g840-xl.jpg"
+    },
+    {
+        "Código": "MP003",
+        "Nombre": "Mousepad SteelSeries QcK Prism RGB XL",
+        "Precio": "39.990 CLP",
+        "Descripción Corta": "Alfombrilla RGB con doble superficie y control mediante software para efectos de iluminación.",
+        "Descripción Larga": "Alfombrilla RGB con doble superficie y control mediante software para efectos de iluminación. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "36",
+        "Especificaciones": [
+        "Compatible con sensores óptico y láser",
+        "Iluminación RGB perimetral",
+        "Formato XL/extendido",
+        "Base de goma antideslizante",
+        "Costuras reforzadas"
+        ],
+        "Puntuacion": "7",
+        "Comentarios": [
+        "Llegó rápido y en buen estado",
+        "Buen producto por el precio"
+        ],
+        "imgLink": "assets/img/products/MousePad/qck-prism-xl.png"
+    },
+    {
+        "Código": "MP004",
+        "Nombre": "Mousepad Corsair MM700 RGB Extended",
+        "Precio": "44.990 CLP",
+        "Descripción Corta": "Alfombrilla extendida con iluminación de tres zonas y puerto USB integrado.",
+        "Descripción Larga": "Alfombrilla extendida con iluminación de tres zonas y puerto USB integrado. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "64",
+        "Especificaciones": [
+        "Iluminación RGB perimetral",
+        "Costuras reforzadas",
+        "Formato XL/extendido",
+        "Compatible con sensores óptico y láser"
+        ],
+        "Puntuacion": "2",
+        "Comentarios": [
+        "Llegó rápido y en buen estado",
+        "Se nota la diferencia en rendimiento"
+        ],
+        "imgLink": "assets/img/products/MousePad/mm700-rgb.png"
+    },
+    {
+        "Código": "MP005",
+        "Nombre": "Mousepad HyperX Fury S XL Pro",
+        "Precio": "24.990 CLP",
+        "Descripción Corta": "Superficie de tela densa para precisión y bordes cosidos que evitan el deshilachado.",
+        "Descripción Larga": "Superficie de tela densa para precisión y bordes cosidos que evitan el deshilachado. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "74",
+        "Especificaciones": [
+        "Base de goma antideslizante",
+        "Compatible con sensores óptico y láser",
+        "Formato XL/extendido",
+        "Superficie microtexturizada"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "La calidad superó mis expectativas",
+        "Me encantó el diseño",
+        "Se siente resistente y cómodo"
+        ],
+        "imgLink": "assets/img/products/MousePad/fury-s-xl.jpg"
+    },
+    {
+        "Código": "MP006",
+        "Nombre": "Mousepad ASUS ROG Scabbard II",
+        "Precio": "49.990 CLP",
+        "Descripción Corta": "Alfombrilla resistente a salpicaduras con recubrimiento protector y gran tamaño.",
+        "Descripción Larga": "Alfombrilla resistente a salpicaduras con recubrimiento protector y gran tamaño. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "118",
+        "Especificaciones": [
+        "Base de goma antideslizante",
+        "Costuras reforzadas",
+        "Compatible con sensores óptico y láser",
+        "Formato XL/extendido",
+        "Superficie microtexturizada"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Buen producto por el precio",
+        "Tal como en la descripción",
+        "Me encantó el diseño"
+        ],
+        "imgLink": "assets/img/products/MousePad/scabbard-2.png"
+    },
+    {
+        "Código": "PP001",
+        "Nombre": "Polera Gamer Personalizada 'Level-Up'",
+        "Precio": "14.990 CLP",
+        "Descripción Corta": "Polera de algodón con estampado gamer 'Level-Up', ideal para uso diario.",
+        "Descripción Larga": "Polera de algodón con estampado gamer 'Level-Up', ideal para uso diario. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "162",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Corte unisex",
+        "Tallas S a XL"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Empaque bien protegido",
+        "La calidad superó mis expectativas"
+        ],
+        "imgLink": "assets/img/products/Poleras/levelup.png"
+    },
+    {
+        "Código": "PP002",
+        "Nombre": "Polera Gamer Personalizada 'Respawn'",
+        "Precio": "15.990 CLP",
+        "Descripción Corta": "Polera con diseño 'Respawn' en impresión de alta calidad y corte cómodo.",
+        "Descripción Larga": "Polera con diseño 'Respawn' en impresión de alta calidad y corte cómodo. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "59",
+        "Especificaciones": [
+        "Corte unisex",
+        "Tallas S a XL",
+        "Lavado a máquina",
+        "Estampado de alta calidad"
+        ],
+        "Puntuacion": "10",
+        "Comentarios": [
+        "Excelente para regalar",
+        "Tal como en la descripción",
+        "Atención al cliente excelente",
+        "Rinde muy bien en juegos"
+        ],
+        "imgLink": "assets/img/products/Poleras/respawn.png"
+    },
+    {
+        "Código": "PP003",
+        "Nombre": "Polera Gamer Personalizada 'Game Over'",
+        "Precio": "16.990 CLP",
+        "Descripción Corta": "Polera temática 'Game Over' para fans de los videojuegos retro.",
+        "Descripción Larga": "Polera temática 'Game Over' para fans de los videojuegos retro. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "110",
+        "Especificaciones": [
+        "Algodón suave",
+        "Lavado a máquina",
+        "Corte unisex"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Tal como en la descripción",
+        "Materiales de buena calidad"
+        ],
+        "imgLink": "assets/img/products/Poleras/gameover.png"
+    },
+    {
+        "Código": "PP004",
+        "Nombre": "Polera Gamer Personalizada 'GG Easy'",
+        "Precio": "14.990 CLP",
+        "Descripción Corta": "Polera casual con frase 'GG Easy', perfecta para streamers y gamers casuales.",
+        "Descripción Larga": "Polera casual con frase 'GG Easy', perfecta para streamers y gamers casuales. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "124",
+        "Especificaciones": [
+        "Tallas S a XL",
+        "Corte unisex",
+        "Algodón suave",
+        "Estampado de alta calidad"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Excelente para regalar",
+        "Se nota la diferencia en rendimiento",
+        "Tal como en la descripción"
+        ],
+        "imgLink": "assets/img/products/Poleras/ggez.png"
+    },
+    {
+        "Código": "PP005",
+        "Nombre": "Polera Gamer Personalizada 'Pixel Heart'",
+        "Precio": "15.990 CLP",
+        "Descripción Corta": "Diseño con corazón pixelado, estilo retro y tela suave al tacto.",
+        "Descripción Larga": "Diseño con corazón pixelado, estilo retro y tela suave al tacto. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "110",
+        "Especificaciones": [
+        "Corte unisex",
+        "Algodón suave",
+        "Estampado de alta calidad",
+        "Lavado a máquina"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Empaque bien protegido",
+        "Llegó rápido y en buen estado",
+        "Materiales de buena calidad"
+        ],
+        "imgLink": "assets/img/products/Poleras/hearth.png"
+    },
+    {
+        "Código": "PP006",
+        "Nombre": "Polera Gamer Personalizada 'Retro Arcade'",
+        "Precio": "17.990 CLP",
+        "Descripción Corta": "Polera con motivo de arcade clásico, ideal para amantes de los videojuegos de los 80s y 90s.",
+        "Descripción Larga": "Polera con motivo de arcade clásico, ideal para amantes de los videojuegos de los 80s y 90s. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "177",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Corte unisex",
+        "Estampado de alta calidad",
+        "Algodón suave"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Se nota la diferencia en rendimiento",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/Poleras/arcade.png"
+    },
+    {
+        "Código": "PG001",
+        "Nombre": "Polerón Gamer Personalizado 'Level-Up'",
+        "Precio": "24.990 CLP",
+        "Descripción Corta": "Polerón con capucha y diseño 'Level-Up', interior suave y cálido.",
+        "Descripción Larga": "Polerón con capucha y diseño 'Level-Up', interior suave y cálido. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "68",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Capucha ajustable",
+        "Bolsillo tipo canguro"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Se siente resistente y cómodo",
+        "Buen producto por el precio",
+        "Llegó rápido y en buen estado"
+        ],
+        "imgLink": "assets/img/products/Polerones/levelup-2.png"
+    },
+    {
+        "Código": "PG002",
+        "Nombre": "Polerón Gamer Personalizado 'Respawn'",
+        "Precio": "25.990 CLP",
+        "Descripción Corta": "Polerón estampado 'Respawn' con bolsillo canguro y ajuste clásico.",
+        "Descripción Larga": "Polerón estampado 'Respawn' con bolsillo canguro y ajuste clásico. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "189",
+        "Especificaciones": [
+        "Corte unisex",
+        "Interior afelpado",
+        "Lavado a máquina",
+        "Bolsillo tipo canguro"
+        ],
+        "Puntuacion": "7",
+        "Comentarios": [
+        "Excelente para regalar",
+        "La calidad superó mis expectativas",
+        "Me encantó el diseño",
+        "Empaque bien protegido"
+        ],
+        "imgLink": "assets/img/products/Polerones/respawn-2.png"
+    },
+    {
+        "Código": "PG003",
+        "Nombre": "Polerón Gamer Personalizado 'Game Over'",
+        "Precio": "26.990 CLP",
+        "Descripción Corta": "Polerón temático 'Game Over' con tela resistente y colores duraderos.",
+        "Descripción Larga": "Polerón temático 'Game Over' con tela resistente y colores duraderos. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "169",
+        "Especificaciones": [
+        "Interior afelpado",
+        "Capucha ajustable",
+        "Lavado a máquina"
+        ],
+        "Puntuacion": "1",
+        "Comentarios": [
+        "Tal como en la descripción",
+        "Llegó rápido y en buen estado"
+        ],
+        "imgLink": "assets/img/products/Polerones/gameover-2.png"
+    },
+    {
+        "Código": "PG004",
+        "Nombre": "Polerón Gamer Personalizado 'GG Easy'",
+        "Precio": "27.990 CLP",
+        "Descripción Corta": "Diseño 'GG EZ' para fans de los desafíos épicos, cómodo y abrigador.",
+        "Descripción Larga": "Diseño 'GG EZ' para fans de los desafíos épicos, cómodo y abrigador. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "152",
+        "Especificaciones": [
+        "Capucha ajustable",
+        "Interior afelpado",
+        "Lavado a máquina",
+        "Bolsillo tipo canguro"
+        ],
+        "Puntuacion": "2",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Rinde muy bien en juegos"
+        ],
+        "imgLink": "assets/img/products/Polerones/ggez-2.png"
+    },
+    {
+        "Código": "PG005",
+        "Nombre": "Polerón Gamer Personalizado 'Pixel Hearth'",
+        "Precio": "28.990 CLP",
+        "Descripción Corta": "Polerón con diseño de corazon pixelado, ideal para un look gamer clásico.",
+        "Descripción Larga": "Polerón con diseño de corazon pixelado, ideal para un look gamer clásico. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "161",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Interior afelpado",
+        "Corte unisex"
+        ],
+        "Puntuacion": "2",
+        "Comentarios": [
+        "La calidad superó mis expectativas",
+        "Se siente resistente y cómodo",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/Polerones/hearth-2.png"
+    },
+    {
+        "Código": "PG006",
+        "Nombre": "Polerón Gamer Personalizado 'arcade'",
+        "Precio": "29.990 CLP",
+        "Descripción Corta": "Polerón con diseño 'Arcade', perfecto para climas fríos y sesiones de juego largas.",
+        "Descripción Larga": "Polerón con diseño 'Arcade', perfecto para climas fríos y sesiones de juego largas. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "167",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Interior afelpado",
+        "Bolsillo tipo canguro",
+        "Corte unisex",
+        "Capucha ajustable"
+        ],
+        "Puntuacion": "10",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "La calidad superó mis expectativas"
+        ],
+        "imgLink": "assets/img/products/Polerones/arcade-2.png"
+    }
+]
+}

@@ -5,43 +5,59 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material3.rememberDrawerState
+import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
+import cl.duoc.level_up_mobile.ui.navigation.MainDrawer
+import cl.duoc.level_up_mobile.ui.screens.HomeScreen
 import cl.duoc.level_up_mobile.ui.theme.LevelUp_MobileTheme
+import kotlinx.coroutines.launch
+import cl.duoc.level_up_mobile.ui.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val productoRepository = ProductoRepository(this)
+
         setContent {
             LevelUp_MobileTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val drawerState = rememberDrawerState(androidx.compose.material3.DrawerValue.Closed)
+                val scope = rememberCoroutineScope()
+
+                MainDrawer(
+                    drawerState = drawerState,
+                    currentRoute = "inicio",
+                    isUserLoggedIn = false,
+                    onItemClick = { route ->
+                        println("Navegar a: $route")
+                    }
+                ) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        AppNavigation(
+                            context = this,
+                            productoRepository = productoRepository,
+                            drawerState = drawerState,
+                            onMenuClick = {
+                                scope.launch {
+                                    if (drawerState.isClosed) drawerState.open() else drawerState.close()
+                                }
+                            },
+                            onCartClick = {
+                                println("Abrir carrito de compras")
+                            }
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LevelUp_MobileTheme {
-        Greeting("Android")
     }
 }

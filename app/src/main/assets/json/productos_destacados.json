@@ -1,0 +1,198 @@
+{	
+	"productosDestacados": [
+    {
+        "Código": "JM001",
+        "Nombre": "Catan",
+        "Precio": "29.990 CLP",
+        "Descripción Corta": "Juego de mesa de estrategia donde los jugadores colonizan una isla, construyen pueblos y comercian recursos para expandirse.",
+        "Descripción Larga": "Juego de mesa de estrategia donde los jugadores colonizan una isla, construyen pueblos y comercian recursos para expandirse. Ideal para reuniones con amigos y familia. Incluye componentes duraderos, reglas claras y alta rejugabilidad para partidas diferentes cada vez.",
+        "Categoría": "Juegos de Mesa",
+        "Stock": "149",
+        "Especificaciones": [
+        "Incluye instrucciones en español",
+        "Tiempo de juego 45–90 min (aprox.)",
+        "Para múltiples jugadores"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Juegos/catan.jpg"
+    },
+    {
+        "Código": "AC002",
+        "Nombre": "Auriculares Gamer HyperX Cloud II",
+        "Precio": "79.990 CLP",
+        "Descripción Corta": "Audífonos con sonido envolvente 7.1, micrófono desmontable y almohadillas de espuma viscoelástica para máxima comodidad.",
+        "Descripción Larga": "Audífonos con sonido envolvente 7.1, micrófono desmontable y almohadillas de espuma viscoelástica para máxima comodidad. Pensado para largas sesiones, con materiales de buena calidad y compatibilidad amplia. Ofrece una experiencia confiable tanto para principiantes como para entusiastas.",
+        "Categoría": "Accesorios",
+        "Stock": "190",
+        "Especificaciones": [
+        "Diadema acolchada",
+        "Sonido envolvente (virtual)",
+        "Almohadillas cómodas",
+        "Micrófono desmontable"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "La calidad superó mis expectativas",
+        "Tal como en la descripción",
+        "Rinde muy bien en juegos",
+        "Buen producto por el precio"
+        ],
+        "imgLink": "assets/img/products/Accesorios/hyperx-cloud2.jpg"
+    },
+    {
+        "Código": "CO001",
+        "Nombre": "PlayStation 5",
+        "Precio": "549.990 CLP",
+        "Descripción Corta": "Consola de nueva generación con gráficos 4K, SSD ultrarrápido y el innovador control DualSense.",
+        "Descripción Larga": "Consola de nueva generación con gráficos 4K, SSD ultrarrápido y el innovador control DualSense. Ofrece arranques veloces y una experiencia fluida en títulos modernos. Perfecta para disfrutar juegos actuales y retro con gran comodidad.",
+        "Categoría": "Consolas",
+        "Stock": "165",
+        "Especificaciones": [
+        "Aplicación complementaria",
+        "Haptic feedback/gatillos adaptativos (PS5)",
+        "Share/stream integrado",
+        "Audio 3D (según título)"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "Se nota la diferencia en rendimiento"
+        ],
+        "imgLink": "assets/img/products/Consolas/ps5.jpg"
+    },
+    {
+        "Código": "CG003",
+        "Nombre": "Notebook Gamer Acer Predator Helios 300",
+        "Precio": "1.199.990 CLP",
+        "Descripción Corta": "Notebook con pantalla de 144Hz, GPU NVIDIA y sistema de refrigeración avanzado para sesiones intensas.",
+        "Descripción Larga": "Notebook con pantalla de 144Hz, GPU NVIDIA y sistema de refrigeración avanzado para sesiones intensas. Listo para juegos exigentes y multitarea. Su diseño favorece temperaturas estables y un rendimiento consistente en sesiones prolongadas.",
+        "Categoría": "Computadores Gamers",
+        "Stock": "148",
+        "Especificaciones": [
+        "Teclado retroiluminado",
+        "Chasis resistente",
+        "Autonomía adecuada",
+        "Sistema de refrigeración eficiente"
+        ],
+        "Puntuacion": "10",
+        "Comentarios": [
+        "Atención al cliente excelente",
+        "Llegó rápido y en buen estado"
+        ],
+        "imgLink": "assets/img/products/Computadores/acer-predator-helios.webp"
+    },
+        {
+        "Código": "MS001",
+        "Nombre": "Mouse Gamer Logitech G502 HERO",
+        "Precio": "49.990 CLP",
+        "Descripción Corta": "Mouse gamer de alta precisión con sensor HERO, botones programables y sistema de pesas ajustable.",
+        "Descripción Larga": "Mouse gamer de alta precisión con sensor HERO, botones programables y sistema de pesas ajustable. Seguimiento preciso y respuesta inmediata para juegos competitivos. Perfila un control cómodo durante horas.",
+        "Categoría": "Mouse",
+        "Stock": "136",
+        "Especificaciones": [
+        "Botones programables",
+        "Software de personalización",
+        "Diseño ergonómico",
+        "Sensor óptico de alta precisión",
+        "DPI ajustable"
+        ],
+        "Puntuacion": "6",
+        "Comentarios": [
+        "Se nota la diferencia en rendimiento",
+        "Tal como en la descripción",
+        "Configuración sencilla"
+        ],
+        "imgLink": "assets/img/products/Mouse/g503-hero.png"
+    },
+    {
+        "Código": "MP001",
+        "Nombre": "Mousepad Razer Goliathus Extended Chroma",
+        "Precio": "29.990 CLP",
+        "Descripción Corta": "Alfombrilla extendida con iluminación RGB perimetral y superficie optimizada para control y velocidad.",
+        "Descripción Larga": "Alfombrilla extendida con iluminación RGB perimetral y superficie optimizada para control y velocidad. Superficie equilibrada que entrega deslizamiento uniforme y control fiable. Resiste el desgaste del uso continuo.",
+        "Categoría": "Mousepad",
+        "Stock": "163",
+        "Especificaciones": [
+        "Compatible con sensores óptico y láser",
+        "Base de goma antideslizante",
+        "Costuras reforzadas"
+        ],
+        "Puntuacion": "5",
+        "Comentarios": [
+        "Materiales de buena calidad",
+        "Empaque bien protegido",
+        "Colores muy fieles"
+        ],
+        "imgLink": "assets/img/products/MousePad/goliathus-extended-chroma.png"
+    },
+    {
+        "Código": "PP001",
+        "Nombre": "Polera Gamer Personalizada 'Level-Up'",
+        "Precio": "14.990 CLP",
+        "Descripción Corta": "Polera de algodón con estampado gamer 'Level-Up', ideal para uso diario.",
+        "Descripción Larga": "Polera de algodón con estampado gamer 'Level-Up', ideal para uso diario. Tela suave y respirable para el día a día. El estampado mantiene los colores tras múltiples lavados.",
+        "Categoría": "Poleras Personalizadas",
+        "Stock": "162",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Corte unisex",
+        "Tallas S a XL"
+        ],
+        "Puntuacion": "4",
+        "Comentarios": [
+        "Empaque bien protegido",
+        "La calidad superó mis expectativas"
+        ],
+        "imgLink": "assets/img/products/Poleras/levelup.png"
+    },
+    {
+        "Código": "PG001",
+        "Nombre": "Polerón Gamer Personalizado 'Level-Up'",
+        "Precio": "24.990 CLP",
+        "Descripción Corta": "Polerón con capucha y diseño 'Level-Up', interior suave y cálido.",
+        "Descripción Larga": "Polerón con capucha y diseño 'Level-Up', interior suave y cálido. Interior agradable y abrigador para climas fríos. El estampado conserva su viveza con el uso.",
+        "Categoría": "Polerones Gamers Personalizados",
+        "Stock": "68",
+        "Especificaciones": [
+        "Lavado a máquina",
+        "Capucha ajustable",
+        "Bolsillo tipo canguro"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Configuración sencilla",
+        "Se siente resistente y cómodo",
+        "Buen producto por el precio",
+        "Llegó rápido y en buen estado"
+        ],
+        "imgLink": "assets/img/products/Polerones/levelup-2.png"
+    },
+    {
+        "Código": "SG001",
+        "Nombre": "Silla Gamer Secretlab Titan",
+        "Precio": "349.990 CLP",
+        "Descripción Corta": "Silla ergonómica de alta gama con soporte lumbar ajustable y materiales de primera calidad.",
+        "Descripción Larga": "Silla ergonómica de alta gama con soporte lumbar ajustable y materiales de primera calidad. Diseño ergonómico que reduce la fatiga en sesiones largas. Materiales resistentes y ensamblaje sencillo para uso diario.",
+        "Categoría": "Sillas Gamers",
+        "Stock": "163",
+        "Especificaciones": [
+        "Altura y respaldo ajustables",
+        "Estructura de acero",
+        "Cojines lumbar y cervical",
+        "Ruedas silenciosas",
+        "Tapicería resistente"
+        ],
+        "Puntuacion": "3",
+        "Comentarios": [
+        "Rinde muy bien en juegos",
+        "Se nota la diferencia en rendimiento",
+        "Me encantó el diseño"
+        ],
+        "imgLink": "assets/img/products/Sillas/Secretlab-Titan.png"
+    }
+	]
+}
