@@ -49,12 +49,12 @@ fun HomeScreen(
     onProductClick: (Producto) -> Unit,
     onCartClick: () -> Unit,
     context: Context,
+    cartItemCount: Int,
     onAddToCart: (Producto) -> Unit
 ) {
     val productosDestacados = productoRepository.obtenerProductosDestacados()
-    val cartItemCount = 0
 
-    // Estado para la búsqueda
+    // Estado para la búsqueda - DENTRO de HomeScreen
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
 
@@ -70,15 +70,16 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             if (isSearchActive) {
-                // TopBar de búsqueda activa
+                // TopBar de búsqueda activa - CORREGIDO
                 SearchTopBar(
                     searchQuery = searchQuery,
                     onSearchQueryChange = { searchQuery = it },
-                    onSearchActiveChange = { isSearchActive = it },
                     onBackClick = {
                         isSearchActive = false
                         searchQuery = ""
-                    }
+                    },
+                    onCartClick = onCartClick,
+                    cartItemCount = cartItemCount
                 )
             } else {
                 // TopBar normal
@@ -191,7 +192,7 @@ fun ProductoCard(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(280.dp),
+            .height(300.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
@@ -258,7 +259,7 @@ fun ProductoCard(
             // Información del producto
             Column(
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(15.dp)
                     .fillMaxWidth()
                     .weight(1f)
             ) {
@@ -340,24 +341,26 @@ fun NormalTopBar(
             }
         },
         actions = {
-            // Icono de búsqueda
             IconButton(onClick = onSearchClick) {
                 Icon(Icons.Filled.Search, contentDescription = "Buscar productos")
             }
 
-            // Icono de carrito con badge
             Box(modifier = Modifier.padding(end = 8.dp)) {
                 IconButton(onClick = onCartClick) {
-                    Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")
+                    Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito de compras")
                 }
                 if (cartItemCount > 0) {
                     Badge(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .offset(x = 8.dp, y = (-8).dp),
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ) {
-                        Text(cartItemCount.toString())
+                        Text(
+                            if (cartItemCount > 9) "9+" else cartItemCount.toString(),
+                            style = MaterialTheme.typography.labelSmall
+                        )
                     }
                 }
             }
@@ -370,8 +373,9 @@ fun NormalTopBar(
 fun SearchTopBar(
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
-    onSearchActiveChange: (Boolean) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit, // ← ESTE PARÁMETRO FALTABA
+    onCartClick: () -> Unit,
+    cartItemCount: Int
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -382,7 +386,7 @@ fun SearchTopBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = onBackClick) { // ← AHORA USA onBackClick
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Volver")
             }
         },
@@ -391,6 +395,26 @@ fun SearchTopBar(
             if (searchQuery.isNotEmpty()) {
                 IconButton(onClick = { onSearchQueryChange("") }) {
                     Icon(Icons.Filled.Close, contentDescription = "Limpiar búsqueda")
+                }
+            }
+
+            // Icono de carrito en search mode también
+            Box(modifier = Modifier.padding(end = 8.dp)) {
+                IconButton(onClick = onCartClick) {
+                    Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")
+                }
+                if (cartItemCount > 0) {
+                    Badge(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .offset(x = 8.dp, y = (-8).dp),
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Text(
+                            if (cartItemCount > 9) "9+" else cartItemCount.toString(),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 }
             }
         }

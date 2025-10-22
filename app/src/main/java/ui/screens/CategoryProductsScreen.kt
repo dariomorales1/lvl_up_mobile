@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +25,9 @@ fun CategoryProductsScreen(
     context: Context,
     onBackClick: () -> Unit,
     onProductClick: (Producto) -> Unit,
-    onAddToCart: (Producto) -> Unit
+    onAddToCart: (Producto) -> Unit,
+    onCartClick: () -> Unit,
+    cartItemCount: Int
 ) {
     val productosCategoria = productoRepository.obtenerProductosPorCategoria(categoria)
 
@@ -33,21 +36,34 @@ fun CategoryProductsScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Column {
-                        Text(
-                            categoria,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            "${productosCategoria.size} productos",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        Text(categoria, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                        Text("${productosCategoria.size} productos", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Volver")
+                    }
+                },
+                actions = {
+                    // Icono de carrito FUNCIONAL
+                    Box(modifier = Modifier.padding(end = 8.dp)) {
+                        IconButton(onClick = onCartClick) { // ← AHORA FUNCIONA
+                            Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")
+                        }
+                        if (cartItemCount > 0) {
+                            Badge(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .offset(x = 8.dp, y = (-8).dp),
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ) {
+                                Text(
+                                    if (cartItemCount > 9) "9+" else cartItemCount.toString(),
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            }
+                        }
                     }
                 }
             )
