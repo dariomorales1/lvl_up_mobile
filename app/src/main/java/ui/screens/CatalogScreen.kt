@@ -27,10 +27,10 @@ fun CatalogScreen(
     onBackClick: () -> Unit,
     onCategoryClick: (String) -> Unit,
     onSearchClick: () -> Unit,
-    onCartClick: () -> Unit
+    onCartClick: () -> Unit,
+    cartItemCount: Int // ← NUEVO PARÁMETRO
 ) {
     val todasLasCategorias = productoRepository.obtenerTodasLasCategorias()
-    val cartItemCount = 0
 
     Scaffold(
         topBar = {
@@ -47,10 +47,12 @@ fun CatalogScreen(
                     }
                 },
                 actions = {
+                    // Icono de búsqueda
                     IconButton(onClick = onSearchClick) {
                         Icon(Icons.Filled.Search, contentDescription = "Buscar")
                     }
 
+                    // Icono de carrito con badge REAL
                     Box(modifier = Modifier.padding(end = 8.dp)) {
                         IconButton(onClick = onCartClick) {
                             Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")
@@ -60,9 +62,13 @@ fun CatalogScreen(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)
                                     .offset(x = 8.dp, y = (-8).dp),
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary
                             ) {
-                                Text(cartItemCount.toString())
+                                Text(
+                                    if (cartItemCount > 9) "9+" else cartItemCount.toString(),
+                                    style = MaterialTheme.typography.labelSmall
+                                )
                             }
                         }
                     }
