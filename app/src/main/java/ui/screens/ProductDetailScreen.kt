@@ -20,16 +20,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.model.Producto
+import cl.duoc.level_up_mobile.repository.carrito.CarritoRepository
 import cl.duoc.level_up_mobile.utils.ImageLoader
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
     producto: Producto,
     context: Context,
+    carritoRepository: CarritoRepository,
     onBackClick: () -> Unit,
     onAddToCart: (Producto) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     val imageBitmap = remember(producto.imagenUrl) {
         ImageLoader.loadImageFromAssets(context, producto.imagenUrl)
     }
@@ -82,7 +89,12 @@ fun ProductDetailScreen(
                     }
 
                     Button(
-                        onClick = { onAddToCart(producto) },
+                        onClick = {
+                            coroutineScope.launch {
+                                carritoRepository.agregarProducto(producto, 1)
+                                onAddToCart(producto)
+                            }
+                        },
                         modifier = Modifier
                             .weight(1f)
                             .height(56.dp),

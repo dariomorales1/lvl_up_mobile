@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
+
 data class DrawerItem(
     val title: String,
     val icon: androidx.compose.ui.graphics.vector.ImageVector,
@@ -38,7 +39,7 @@ fun MainDrawer(
 
     val drawerItems = listOf(
         DrawerItem("Inicio", Icons.Default.Home, "inicio"),
-        DrawerItem("Catálogo", Icons.Default.ShoppingCart, "catalogo"),
+        DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
         DrawerItem("Favoritos", Icons.Default.Favorite, "favoritos", true),
         DrawerItem("Historial", Icons.Default.History, "historial", true),
         DrawerItem("Mi Perfil", Icons.Default.Person, "perfil", true),

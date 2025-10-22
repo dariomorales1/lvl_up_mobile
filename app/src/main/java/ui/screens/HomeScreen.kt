@@ -48,7 +48,8 @@ fun HomeScreen(
     onMenuClick: () -> Unit,
     onProductClick: (Producto) -> Unit,
     onCartClick: () -> Unit,
-    context: Context
+    context: Context,
+    onAddToCart: (Producto) -> Unit
 ) {
     val productosDestacados = productoRepository.obtenerProductosDestacados()
     val cartItemCount = 0
@@ -142,6 +143,7 @@ fun HomeScreen(
                 ProductosGrid(
                     productos = productosFiltrados,
                     onProductClick = onProductClick,
+                    onAddToCart = onAddToCart,
                     context = context
                 )
             }
@@ -153,10 +155,11 @@ fun HomeScreen(
 fun ProductosGrid(
     productos: List<Producto>,
     onProductClick: (Producto) -> Unit,
+    onAddToCart: (Producto) -> Unit,
     context: Context
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // 2 columnas fijas
+        columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -166,6 +169,7 @@ fun ProductosGrid(
             ProductoCard(
                 producto = producto,
                 context = context,
+                onAddToCart = onAddToCart,
                 onClick = { onProductClick(producto) }
             )
         }
@@ -176,6 +180,7 @@ fun ProductosGrid(
 fun ProductoCard(
     producto: Producto,
     context: Context,
+    onAddToCart: (Producto) -> Unit,
     onClick: () -> Unit
 ) {
     val imageBitmap = remember(producto.imagenUrl) {
@@ -186,16 +191,15 @@ fun ProductoCard(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(280.dp), // Un poco más alta
+            .height(280.dp),
         elevation = CardDefaults.cardElevation(8.dp),
-        shape = MaterialTheme.shapes.medium, // Bordes redondeados
+        shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface
         )
     ) {
         Column {
-            // Imagen del producto con overlay de rating
             Box(modifier = Modifier.fillMaxWidth()) {
                 if (imageBitmap != null) {
                     Image(
@@ -288,21 +292,16 @@ fun ProductoCard(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Botón con la nueva paleta de colores
+                // Botón rápido de añadir al carrito - ACTUALIZADO
                 Button(
-                    onClick = { /* Agregar al carrito */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(36.dp),
+                    onClick = { onAddToCart(producto) },
+                    modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.small,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary, // Verde
-                        contentColor = MaterialTheme.colorScheme.onPrimary  // Negro
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 2.dp,
-                        pressedElevation = 4.dp
-                    )
+                    elevation = ButtonDefaults.buttonElevation(2.dp)
                 ) {
                     Icon(
                         Icons.Filled.AddShoppingCart,
@@ -310,11 +309,9 @@ fun ProductoCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        "Añadir al carrito",
-                        modifier = Modifier.padding(start = 6.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Medium,
-                        maxLines = 1
+                        "Añadir",
+                        modifier = Modifier.padding(start = 4.dp),
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
             }
