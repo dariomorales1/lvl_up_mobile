@@ -25,6 +25,9 @@ import cl.duoc.level_up_mobile.ui.screens.HomeScreen
 import cl.duoc.level_up_mobile.ui.screens.ProductDetailScreen
 import cl.duoc.level_up_mobile.ui.screens.CartScreen
 import androidx.compose.ui.unit.dp
+import cl.duoc.level_up_mobile.ui.screens.BlogScreen
+import cl.duoc.level_up_mobile.ui.screens.ContactoScreen
+
 
 sealed class Screen {
     object Home : Screen()
@@ -32,6 +35,10 @@ sealed class Screen {
     object Catalog : Screen()
     data class CategoryProducts(val categoria: String) : Screen()
     object Cart : Screen()
+
+    // 👇 NUEVO
+    object Blog : Screen()
+    object Contact : Screen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -169,6 +176,20 @@ fun AppNavigation(
                         }
                     )
                 }
+
+                is Screen.Blog -> {
+                    BlogScreen(
+                        onBackClick = { onScreenChange(Screen.Home) }
+                    )
+                }
+
+                is Screen.Contact -> {
+                    ContactoScreen(
+                        onBackClick = { onScreenChange(Screen.Home) }
+                    )
+                }
+
+
             }
         }
     }

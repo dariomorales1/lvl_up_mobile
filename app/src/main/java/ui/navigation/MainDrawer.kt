@@ -44,11 +44,16 @@ fun MainDrawer(
         DrawerItem("Historial", Icons.Default.History, "historial", true),
         DrawerItem("Mi Perfil", Icons.Default.Person, "perfil", true),
         DrawerItem("Configuración", Icons.Default.Settings, "configuracion", true),
+
+        DrawerItem("Blog y Tendencias", Icons.Default.Article, "blog"),
+        DrawerItem("Contáctanos", Icons.Default.HeadsetMic, "contacto"),
         DrawerItem(
             if (isUserLoggedIn) "Cerrar Sesión" else "Iniciar Sesión",
             if (isUserLoggedIn) Icons.Default.ExitToApp else Icons.Default.Login,
             if (isUserLoggedIn) "logout" else "login"
         )
+
+
     )
 
     ModalNavigationDrawer(
