@@ -40,18 +40,26 @@ class MainActivity : ComponentActivity() {
                         is Screen.Home -> "inicio"
                         is Screen.Catalog -> "catalogo"
                         is Screen.Cart -> "carrito"
+                        is Screen.Blog    -> "blog"
+                        is Screen.Contact -> "contacto"
+
                         else -> "inicio"
                     },
                     isUserLoggedIn = false,
                     onItemClick = { route ->
                         scope.launch { drawerState.close() }
+
                         when (route) {
-                            "inicio" -> currentScreen.value = Screen.Home
+                            "inicio"   -> currentScreen.value = Screen.Home
                             "catalogo" -> currentScreen.value = Screen.Catalog
-                            "carrito" -> currentScreen.value = Screen.Cart
-                            "login" -> println("Navegar a login")
+                            "carrito"  -> currentScreen.value = Screen.Cart
+                            "blog"     -> currentScreen.value = Screen.Blog   // 👈 NUEVO
+                            "contacto" -> currentScreen.value = Screen.Contact // 👈 NUEVO
+                            "login"    -> println("Navega a login")
+                            else       -> currentScreen.value = Screen.Home
                         }
                     }
+
                 ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
