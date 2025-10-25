@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
                     currentUser = currentUser,
                     onItemClick = { route ->
                         scope.launch { drawerState.close() }
+
                         when (route) {
                             "inicio" -> currentScreen = Screen.Home
                             "catalogo" -> currentScreen = Screen.Catalog
@@ -108,6 +109,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+
                 ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),

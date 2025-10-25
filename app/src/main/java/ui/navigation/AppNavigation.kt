@@ -27,6 +27,9 @@ import cl.duoc.level_up_mobile.ui.screens.ProductDetailScreen
 import cl.duoc.level_up_mobile.ui.screens.CartScreen
 import cl.duoc.level_up_mobile.ui.login.LoginScreen
 import androidx.compose.ui.unit.dp
+import cl.duoc.level_up_mobile.ui.screens.BlogScreen
+import cl.duoc.level_up_mobile.ui.screens.ContactoScreen
+
 
 sealed class Screen {
     object Home : Screen()
@@ -216,6 +219,20 @@ fun AppNavigation(
                         }
                     )
                 }
+
+                is Screen.Blog -> {
+                    BlogScreen(
+                        onBackClick = { onScreenChange(Screen.Home) }
+                    )
+                }
+
+                is Screen.Contact -> {
+                    ContactoScreen(
+                        onBackClick = { onScreenChange(Screen.Home) }
+                    )
+                }
+
+
             }
         }
     }
