@@ -75,7 +75,6 @@ fun Contacto(
                 modifier = Modifier.weight(1f)
             )
 
-            // ENVIAR
             LettuceButton(
                 text = "ENVIAR",
                 onClick = {
@@ -99,10 +98,6 @@ fun Contacto(
     }
 }
 
-/**
- * Botón "verde lechuga" con animación (escala + elevación al presionar).
- * Verde lechuga aproximado: #76FF03 (también puedes probar #7CFC00).
- */
 @Composable
 fun LettuceButton(
     text: String,
@@ -119,8 +114,8 @@ fun LettuceButton(
         onClick = onClick,
         interactionSource = interaction,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF76FF03),   // verde lechuga
-            contentColor = Color(0xFF0B1F0A)      // texto verde muy oscuro para contraste
+            containerColor = Color(0xFF76FF03),
+            contentColor = Color(0xFF0B1F0A)
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = elevation,

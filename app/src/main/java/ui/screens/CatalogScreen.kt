@@ -28,7 +28,7 @@ fun CatalogScreen(
     onCategoryClick: (String) -> Unit,
     onSearchClick: () -> Unit,
     onCartClick: () -> Unit,
-    cartItemCount: Int // ← NUEVO PARÁMETRO
+    cartItemCount: Int
 ) {
     val todasLasCategorias = productoRepository.obtenerTodasLasCategorias()
 
@@ -37,7 +37,6 @@ fun CatalogScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("🎮", modifier = Modifier.padding(end = 8.dp))
                         Text("Catálogo Completo")
                     }
                 },
@@ -47,12 +46,10 @@ fun CatalogScreen(
                     }
                 },
                 actions = {
-                    // Icono de búsqueda
                     IconButton(onClick = onSearchClick) {
                         Icon(Icons.Filled.Search, contentDescription = "Buscar")
                     }
 
-                    // Icono de carrito con badge REAL
                     Box(modifier = Modifier.padding(end = 8.dp)) {
                         IconButton(onClick = onCartClick) {
                             Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")

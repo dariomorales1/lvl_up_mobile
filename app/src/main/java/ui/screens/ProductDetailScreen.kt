@@ -150,13 +150,11 @@ fun ProductDetailScreen(
                 }
             }
 
-            // Información del producto
             Column(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                // Rating y categoría
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
@@ -186,7 +184,6 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Descripción
                 Text(
                     "Descripción",
                     style = MaterialTheme.typography.titleMedium,
@@ -201,7 +198,6 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Especificaciones
                 Text(
                     "Especificaciones",
                     style = MaterialTheme.typography.titleMedium,
@@ -228,7 +224,6 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Stock
                 Text(
                     "Stock disponible: ${producto.stock} unidades",
                     style = MaterialTheme.typography.bodyMedium,
@@ -237,7 +232,6 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Comentarios (si existen)
                 if (producto.comentarios.isNotEmpty()) {
                     Text(
                         "Comentarios",

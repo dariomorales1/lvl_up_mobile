@@ -27,7 +27,6 @@ fun BlogScreen(onBackClick: () -> Unit) {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            // 👇 aquí llamamos al contenido separado
             Blog(innerPadding)
         }
     }

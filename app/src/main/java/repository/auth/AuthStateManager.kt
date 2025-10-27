@@ -9,7 +9,6 @@ import kotlinx.coroutines.channels.awaitClose
 object AuthStateManager {
     private val auth = FirebaseAuth.getInstance()
 
-    // Flujo reactivo que emite el usuario actual
     val currentUser: Flow<User?> = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val firebaseUser = firebaseAuth.currentUser
@@ -26,14 +25,12 @@ object AuthStateManager {
         }
     }
 
-    // Flujo reactivo para saber si está logueado
     val isUserLoggedIn: Flow<Boolean> = currentUser.map { it != null }
 
     fun logout() {
         auth.signOut()
     }
 
-    // Función de conveniencia para obtener el usuario actual (no reactiva)
     fun getCurrentUser(): User? {
         return auth.currentUser?.let {
             User(uid = it.uid, email = it.email ?: "", displayName = it.displayName ?: "")

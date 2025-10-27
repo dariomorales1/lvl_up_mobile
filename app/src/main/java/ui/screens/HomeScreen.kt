@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cl.duoc.level_up_mobile.model.Producto
+import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
 import cl.duoc.level_up_mobile.utils.ImageLoader
 import androidx.compose.foundation.background
@@ -50,15 +51,15 @@ fun HomeScreen(
     onCartClick: () -> Unit,
     context: Context,
     cartItemCount: Int,
-    onAddToCart: (Producto) -> Unit
+    onAddToCart: (Producto) -> Unit,
+    currentUser: User?,
+    onLoginRequired: () -> Unit
 ) {
     val productosDestacados = productoRepository.obtenerProductosDestacados()
 
-    // Estado para la búsqueda - DENTRO de HomeScreen
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
 
-    // Filtrar productos basado en la búsqueda
     val productosFiltrados = remember(searchQuery, productosDestacados) {
         if (searchQuery.isEmpty()) {
             productosDestacados
@@ -70,7 +71,6 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             if (isSearchActive) {
-                // TopBar de búsqueda activa - CORREGIDO
                 SearchTopBar(
                     searchQuery = searchQuery,
                     onSearchQueryChange = { searchQuery = it },
@@ -82,12 +82,12 @@ fun HomeScreen(
                     cartItemCount = cartItemCount
                 )
             } else {
-                // TopBar normal
                 NormalTopBar(
                     onMenuClick = onMenuClick,
                     onCartClick = onCartClick,
                     onSearchClick = { isSearchActive = true },
-                    cartItemCount = cartItemCount
+                    cartItemCount = cartItemCount,
+                    currentUser = currentUser // NUEVO
                 )
             }
         }
@@ -97,7 +97,15 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            // Título condicional
+            if (currentUser != null) {
+                Text(
+                    "¡Hola, ${currentUser.displayName ?: currentUser.email?.split("@")?.first() ?: "Gamer"}!",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+
             if (searchQuery.isNotEmpty()) {
                 Text(
                     "🔍 Resultados para \"$searchQuery\"",
@@ -112,7 +120,6 @@ fun HomeScreen(
                 )
             }
 
-            // Mostrar mensaje si no hay resultados
             if (searchQuery.isNotEmpty() && productosFiltrados.isEmpty()) {
                 Box(
                     modifier = Modifier
@@ -144,8 +151,15 @@ fun HomeScreen(
                 ProductosGrid(
                     productos = productosFiltrados,
                     onProductClick = onProductClick,
-                    onAddToCart = onAddToCart,
-                    context = context
+                    onAddToCart = { producto ->
+                        if (currentUser == null) {
+                            onLoginRequired()
+                        } else {
+                            onAddToCart(producto)
+                        }
+                    },
+                    context = context,
+                    currentUser = currentUser // NUEVO
                 )
             }
         }
@@ -157,7 +171,8 @@ fun ProductosGrid(
     productos: List<Producto>,
     onProductClick: (Producto) -> Unit,
     onAddToCart: (Producto) -> Unit,
-    context: Context
+    context: Context,
+    currentUser: User?
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -171,7 +186,8 @@ fun ProductosGrid(
                 producto = producto,
                 context = context,
                 onAddToCart = onAddToCart,
-                onClick = { onProductClick(producto) }
+                onClick = { onProductClick(producto) },
+                currentUser = currentUser // NUEVO
             )
         }
     }
@@ -182,7 +198,8 @@ fun ProductoCard(
     producto: Producto,
     context: Context,
     onAddToCart: (Producto) -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    currentUser: User?
 ) {
     val imageBitmap = remember(producto.imagenUrl) {
         ImageLoader.loadImageFromAssets(context, producto.imagenUrl)
@@ -228,7 +245,6 @@ fun ProductoCard(
                     }
                 }
 
-                // Badge de rating en esquina superior derecha
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
@@ -256,7 +272,6 @@ fun ProductoCard(
                 }
             }
 
-            // Información del producto
             Column(
                 modifier = Modifier
                     .padding(15.dp)
@@ -293,13 +308,16 @@ fun ProductoCard(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Botón rápido de añadir al carrito - ACTUALIZADO
                 Button(
                     onClick = { onAddToCart(producto) },
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.small,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
+                        containerColor = if (currentUser != null) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.secondary
+                        },
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     elevation = ButtonDefaults.buttonElevation(2.dp)
@@ -310,7 +328,7 @@ fun ProductoCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        "Añadir",
+                        if (currentUser != null) "Añadir" else "Inicia sesión",
                         modifier = Modifier.padding(start = 4.dp),
                         style = MaterialTheme.typography.labelMedium
                     )
@@ -326,13 +344,25 @@ fun NormalTopBar(
     onMenuClick: () -> Unit,
     onCartClick: () -> Unit,
     onSearchClick: () -> Unit,
-    cartItemCount: Int
+    cartItemCount: Int,
+    currentUser: User?
 ) {
     CenterAlignedTopAppBar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("🎮", modifier = Modifier.padding(end = 8.dp))
                 Text("Level-Up Gamer")
+                currentUser?.let {
+                    Badge(
+                        modifier = Modifier.padding(start = 8.dp),
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    ) {
+                        Text(
+                            "✓",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
             }
         },
         navigationIcon = {
@@ -373,7 +403,7 @@ fun NormalTopBar(
 fun SearchTopBar(
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
-    onBackClick: () -> Unit, // ← ESTE PARÁMETRO FALTABA
+    onBackClick: () -> Unit,
     onCartClick: () -> Unit,
     cartItemCount: Int
 ) {
@@ -386,19 +416,17 @@ fun SearchTopBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onBackClick) { // ← AHORA USA onBackClick
+            IconButton(onClick = onBackClick) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Volver")
             }
         },
         actions = {
-            // Botón para limpiar búsqueda
             if (searchQuery.isNotEmpty()) {
                 IconButton(onClick = { onSearchQueryChange("") }) {
                     Icon(Icons.Filled.Close, contentDescription = "Limpiar búsqueda")
                 }
             }
 
-            // Icono de carrito en search mode también
             Box(modifier = Modifier.padding(end = 8.dp)) {
                 IconButton(onClick = onCartClick) {
                     Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito")
@@ -446,7 +474,7 @@ fun SearchTextField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(
-            onSearch = { /* Acción al presionar buscar */ }
+            onSearch = {}
         )
     )
 }

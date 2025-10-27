@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
-// Modelo simple
 data class BlogPost(
     val id: String,
     val titulo: String,
@@ -53,7 +52,6 @@ fun Blog(innerPadding: PaddingValues) {
             .padding(innerPadding)
             .fillMaxSize()
     ) {
-        // Filtros
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,7 +68,6 @@ fun Blog(innerPadding: PaddingValues) {
             }
         }
 
-        // Lista
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
@@ -78,7 +75,7 @@ fun Blog(innerPadding: PaddingValues) {
         ) {
             items(filtrados, key = { it.id }) { post ->
                 ElevatedCard(
-                    onClick = { /* abrir detalle futuro */ },
+                    onClick = {},
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(Modifier.padding(16.dp)) {
