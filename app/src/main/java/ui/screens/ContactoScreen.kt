@@ -34,10 +34,8 @@ fun ContactoScreen(onBackClick: () -> Unit) {
         ) {
             Contacto(
                 innerPadding = innerPadding,
-                onCancel = { /* si quieres, navega atrás o solo limpia */ },
+                onCancel = {},
                 onSend = { nombre, correo, _ ->
-                    // Aquí iría tu POST/Firestore/email real
-                    // Mostramos confirmación usando coroutines (NO LaunchedEffect)
                     scope.launch {
                         snackbarHostState.showSnackbar("¡Gracias $nombre! Te responderemos a $correo.")
                     }

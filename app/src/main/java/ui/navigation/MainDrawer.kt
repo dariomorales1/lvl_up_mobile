@@ -1,10 +1,12 @@
 package cl.duoc.level_up_mobile.ui.navigation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Divider
@@ -31,7 +33,8 @@ data class DrawerItem(
     val title: String,
     val icon: androidx.compose.ui.graphics.vector.ImageVector,
     val route: String,
-    val requiresAuth: Boolean = false
+    val requiresAuth: Boolean = false,
+    val showComingSoon: Boolean = false
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,8 +42,9 @@ data class DrawerItem(
 fun MainDrawer(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     currentRoute: String,
-    currentUser: User?, // Cambiado: ahora recibe User en lugar de isUserLoggedIn
+    currentUser: User?,
     onItemClick: (String) -> Unit,
+    onShowComingSoonMessage: (String) -> Unit,
     content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -48,22 +52,21 @@ fun MainDrawer(
 
     val drawerItems = remember(isUserLoggedIn) {
         if (isUserLoggedIn) {
-            // Drawer para usuario LOGUEADO
             listOf(
                 DrawerItem("Inicio", Icons.Default.Home, "inicio"),
                 DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
-                DrawerItem("Favoritos", Icons.Default.Favorite, "favoritos"),
-                DrawerItem("Historial", Icons.Default.History, "historial"),
+                DrawerItem("Favoritos", Icons.Default.Favorite, "favoritos", showComingSoon = true),
+                DrawerItem("Historial", Icons.Default.History, "historial", showComingSoon = true),
                 DrawerItem("Mi Perfil", Icons.Default.Person, "perfil"),
-                DrawerItem("Configuración", Icons.Default.Settings, "configuracion"),
+                DrawerItem("Configuración", Icons.Default.Settings, "configuracion", showComingSoon = true),
                 DrawerItem("Cerrar Sesión", Icons.Default.ExitToApp, "logout")
             )
         } else {
-            // Drawer para usuario NO logueado
             listOf(
                 DrawerItem("Inicio", Icons.Default.Home, "inicio"),
                 DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
-                DrawerItem("Iniciar Sesión", Icons.Default.Login, "login")
+                DrawerItem("Iniciar Sesión", Icons.Default.Login, "login"),
+                DrawerItem("Registrarse", Icons.Default.PersonAdd, "signup")
             )
         }
     }
@@ -72,20 +75,18 @@ fun MainDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                // Header que cambia según el estado
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
                     Text(
-                        "🎮 LEVEL-UP GAMER",
+                        "LEVEL-UP GAMER",
                         style = MaterialTheme.typography.titleMedium
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
                     if (isUserLoggedIn) {
-                        // Header para usuario logueado
                         Column {
                             Text(
                                 "¡Hola!",
@@ -103,12 +104,18 @@ fun MainDrawer(
                             }
                         }
                     } else {
-                        // Header para usuario no logueado
-                        Text(
-                            "Inicia sesión para más funciones",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        Column {
+                            Text(
+                                "Bienvenido a LEVEL-UP",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                "Inicia sesión o regístrate para más funciones",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
 
@@ -117,12 +124,33 @@ fun MainDrawer(
                 // Items del menú
                 drawerItems.forEach { item ->
                     NavigationDrawerItem(
-                        icon = { Icon(item.icon, contentDescription = null) },
-                        label = { Text(item.title) },
+                        icon = {
+                            Icon(
+                                item.icon,
+                                contentDescription = null
+                            )
+                        },
+                        label = {
+                            Row {
+                                Text(item.title)
+                                if (item.showComingSoon) {
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        "*",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                }
+                            }
+                        },
                         selected = currentRoute == item.route,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            onItemClick(item.route)
+
+                            if (item.showComingSoon) {
+                                onShowComingSoonMessage(item.title)
+                            } else {
+                                onItemClick(item.route)
+                            }
                         }
                     )
                 }

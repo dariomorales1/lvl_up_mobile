@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 
-// UserStatusCard primero
 @Composable
 fun UserStatusCard(
     currentUser: User?,
@@ -61,7 +60,7 @@ fun UserStatusCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            "✅ Sesión iniciada",
+                            "Sesión iniciada",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium
                         )
@@ -81,7 +80,7 @@ fun UserStatusCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            "🔒 Inicia sesión para comprar",
+                            "Inicia sesión para comprar",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium
                         )
@@ -131,7 +130,6 @@ fun CartScreen(
         },
         bottomBar = {
             if (carritoItems.isNotEmpty()) {
-                // ✅ USAR obtenerSubtotal() que ya maneja la conversión
                 val total = carritoItems.sumOf { it.obtenerSubtotal() }
                 CartBottomBar(
                     totalItems = carritoItems.sumOf { it.cantidad },
@@ -244,7 +242,6 @@ fun CartItemCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Imagen del producto
             val imageBitmap = remember(item.productoImagenUrl) {
                 try {
                     ImageLoader.loadImageFromAssets(context, item.productoImagenUrl)
@@ -276,7 +273,6 @@ fun CartItemCard(
                 }
             }
 
-            // Información del producto
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     item.productoNombre,
@@ -285,21 +281,18 @@ fun CartItemCard(
                     maxLines = 2
                 )
 
-                // ✅ MOSTRAR PRECIO ORIGINAL (String)
                 Text(
                     item.productoPrecio,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                // ✅ MOSTRAR SUBTOTAL CALCULADO
                 Text(
                     "Subtotal: $${String.format("%,.0f", item.obtenerSubtotal())} CLP",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
-                // Contador de cantidad
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(top = 8.dp)
@@ -347,7 +340,6 @@ fun CartItemCard(
                 }
             }
 
-            // Botón eliminar
             IconButton(
                 onClick = { onRemoveItem(item.productoCodigo) }
             ) {

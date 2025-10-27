@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
@@ -20,6 +22,8 @@ import cl.duoc.level_up_mobile.ui.theme.LevelUp_MobileTheme
 import kotlinx.coroutines.launch
 import com.google.firebase.auth.FirebaseAuth
 import cl.duoc.level_up_mobile.model.User
+import android.util.Log
+import cl.duoc.level_up_mobile.repository.auth.AuthRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +32,14 @@ class MainActivity : ComponentActivity() {
 
         val productoRepository = ProductoRepository(this)
         val carritoRepository = CarritoRepository(this)
+        val authRepository = AuthRepository()
 
         setContent {
             LevelUp_MobileTheme {
                 val drawerState = rememberDrawerState(androidx.compose.material3.DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+                val snackbarHostState = remember { SnackbarHostState() }
 
-                // Estado reactivo del usuario actual
                 val currentUser by produceState<User?>(
                     initialValue = null,
                     key1 = Unit
@@ -45,21 +50,11 @@ class MainActivity : ComponentActivity() {
                             User(uid = it.uid, email = it.email ?: "", displayName = it.displayName ?: "")
                         }
 
-                        // ✅ TRANSFERIR CARRITO cuando un usuario se loguea
+                        Log.d("AuthDebug", "🔄 AuthState: ${firebaseUser?.email ?: "null"}")
+
                         if (firebaseUser != null && value == null) {
-                            // Usuario acaba de loguearse (antes era null)
                             scope.launch {
                                 carritoRepository.transferirCarritoGuestAUsuario(firebaseUser.uid)
-                                carritoRepository.debugUsuarios() // Para verificar
-                            }
-                        }
-
-                        // ✅ LIMPIAR CARRITO GUEST cuando un usuario hace logout
-                        if (firebaseUser == null && value != null) {
-                            // Usuario acaba de hacer logout
-                            scope.launch {
-                                // Opcional: limpiar carrito guest si quieres
-                                // carritoRepository.limpiarCarritoGuest()
                             }
                         }
 
@@ -73,11 +68,18 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                val isUserLoggedIn = currentUser != null
-
-                // Estado de la pantalla actual - SIEMPRE inicia en Home
                 var currentScreen by remember {
                     mutableStateOf<Screen>(Screen.Home)
+                }
+
+                // Controlar cuándo forzar el login
+                var shouldForceLogin by remember { mutableStateOf(false) }
+
+                LaunchedEffect(shouldForceLogin) {
+                    if (shouldForceLogin) {
+                        currentScreen = Screen.Login
+                        shouldForceLogin = false
+                    }
                 }
 
                 MainDrawer(
@@ -87,6 +89,7 @@ class MainActivity : ComponentActivity() {
                         is Screen.Catalog -> "catalogo"
                         is Screen.Cart -> "carrito"
                         is Screen.Login -> "login"
+                        is Screen.Signup -> "signup"
                         else -> "inicio"
                     },
                     currentUser = currentUser,
@@ -97,25 +100,30 @@ class MainActivity : ComponentActivity() {
                             "inicio" -> currentScreen = Screen.Home
                             "catalogo" -> currentScreen = Screen.Catalog
                             "carrito" -> currentScreen = Screen.Cart
-                            "login" -> currentScreen = Screen.Login
+                            "login" ->  currentScreen = Screen.Login
+                            "signup" -> currentScreen = Screen.Signup
+                            "perfil" -> currentScreen = Screen.Profile
                             "logout" -> {
-                                // ✅ Hacer logout
                                 FirebaseAuth.getInstance().signOut()
-                                // No cambiamos la pantalla, se queda en la actual
-                            }
-                            "perfil" -> {
-                                // Si tienes pantalla de perfil:
-                                // currentScreen = Screen.Profile
+                                currentScreen = Screen.Home
                             }
                         }
+                    },
+                    onShowComingSoonMessage = { featureName ->
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "$featureName estará disponible próximamente",
+                                actionLabel = "OK",
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                        Log.d("Navigation", "Función próxima: $featureName")
                     }
-
                 ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        // ✅ SIEMPRE mostrar AppNavigation, el login se maneja internamente
                         AppNavigation(
                             context = this@MainActivity,
                             productoRepository = productoRepository,
@@ -136,7 +144,9 @@ class MainActivity : ComponentActivity() {
                             currentUser = currentUser,
                             onLoginRequired = {
                                 currentScreen = Screen.Login
-                            }
+                            },
+                            authRepository = authRepository,
+                            snackbarHostState = snackbarHostState
                         )
                     }
                 }

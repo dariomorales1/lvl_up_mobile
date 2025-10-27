@@ -13,7 +13,6 @@ class CarritoRepository(context: Context) {
     private val carritoDao = AppDatabase.getDatabase(context).carritoDao()
     private val auth = FirebaseAuth.getInstance()
 
-    // ✅ Obtener el userId actual (logueado o guest)
     private fun getCurrentUserId(): String {
         return auth.currentUser?.uid ?: "guest"
     }
@@ -23,14 +22,11 @@ class CarritoRepository(context: Context) {
         val itemExistente = carritoDao.obtenerPorCodigo(userId, producto.codigo)
 
         if (itemExistente != null) {
-            // Actualizar cantidad si ya existe
             val nuevoItem = itemExistente.copy(
                 cantidad = itemExistente.cantidad + cantidad
             )
             carritoDao.actualizar(nuevoItem)
-            Log.d("CarritoRepo", "Producto actualizado: ${producto.nombre} para usuario: $userId")
         } else {
-            // Insertar nuevo item con userId
             val nuevoItem = CarritoItem(
                 userId = userId,
                 productoCodigo = producto.codigo,
@@ -40,7 +36,6 @@ class CarritoRepository(context: Context) {
                 cantidad = cantidad
             )
             carritoDao.insertar(nuevoItem)
-            Log.d("CarritoRepo", "Producto agregado: ${producto.nombre} para usuario: $userId")
         }
     }
 
@@ -50,23 +45,18 @@ class CarritoRepository(context: Context) {
         item?.let {
             if (nuevaCantidad > 0) {
                 carritoDao.actualizar(it.copy(cantidad = nuevaCantidad))
-                Log.d("CarritoRepo", "Cantidad actualizada: $codigo a $nuevaCantidad para usuario: $userId")
             } else {
                 carritoDao.eliminarPorCodigo(userId, codigo)
-                Log.d("CarritoRepo", "Producto eliminado: $codigo para usuario: $userId")
             }
         }
     }
-
     suspend fun eliminarProducto(codigo: String) {
         val userId = getCurrentUserId()
         carritoDao.eliminarPorCodigo(userId, codigo)
-        Log.d("CarritoRepo", "Producto eliminado: $codigo para usuario: $userId")
     }
 
     fun obtenerCarrito(): Flow<List<CarritoItem>> {
         val userId = getCurrentUserId()
-        Log.d("CarritoRepo", "Obteniendo carrito para usuario: $userId")
         return carritoDao.obtenerPorUsuario(userId)
     }
 
@@ -83,7 +73,6 @@ class CarritoRepository(context: Context) {
     suspend fun limpiarCarrito() {
         val userId = getCurrentUserId()
         carritoDao.limpiarCarritoUsuario(userId)
-        Log.d("CarritoRepo", "Carrito limpiado para usuario: $userId")
     }
 
     suspend fun obtenerTotalCarrito(): Double {
@@ -92,39 +81,30 @@ class CarritoRepository(context: Context) {
         return items.sumOf { it.obtenerSubtotal() }
     }
 
-    // ✅ TRANSFERIR carrito de guest a usuario al hacer login
     suspend fun transferirCarritoGuestAUsuario(userId: String) {
         try {
             val carritoGuest = carritoDao.obtenerPorUsuario("guest").first()
 
             if (carritoGuest.isNotEmpty()) {
-                Log.d("CarritoRepo", "Transferiendo ${carritoGuest.size} items de guest a usuario: $userId")
 
-                // Transferir cada item del guest al usuario
                 carritoGuest.forEach { itemGuest ->
                     val itemExistente = carritoDao.obtenerPorCodigo(userId, itemGuest.productoCodigo)
 
                     if (itemExistente != null) {
-                        // Si ya existe, sumar las cantidades
                         val nuevoItem = itemExistente.copy(
                             cantidad = itemExistente.cantidad + itemGuest.cantidad
                         )
                         carritoDao.actualizar(nuevoItem)
-                        Log.d("CarritoRepo", "Item fusionado: ${itemGuest.productoNombre}")
                     } else {
-                        // Si no existe, crear nuevo item con el userId
                         val nuevoItem = itemGuest.copy(
                             userId = userId,
-                            id = 0 // Nueva ID auto-generada
+                            id = 0
                         )
                         carritoDao.insertar(nuevoItem)
-                        Log.d("CarritoRepo", "Item transferido: ${itemGuest.productoNombre}")
                     }
                 }
 
-                // Limpiar carrito guest después de transferir
                 carritoDao.limpiarCarritoGuest()
-                Log.d("CarritoRepo", "Carrito transferido exitosamente")
             } else {
                 Log.d("CarritoRepo", "No hay items en carrito guest para transferir")
             }
@@ -133,13 +113,11 @@ class CarritoRepository(context: Context) {
         }
     }
 
-    // ✅ Limpiar carrito guest (para logout)
     suspend fun limpiarCarritoGuest() {
         carritoDao.limpiarCarritoGuest()
         Log.d("CarritoRepo", "Carrito guest limpiado")
     }
 
-    // ✅ Debug: ver todos los usuarios con carrito
     suspend fun debugUsuarios() {
         try {
             val usuarios = carritoDao.obtenerTodosLosUsuarios()

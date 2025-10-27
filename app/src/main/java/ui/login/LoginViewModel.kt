@@ -1,5 +1,6 @@
 package cl.duoc.level_up_mobile.ui.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +18,7 @@ data class LoginUiState(
     val error: String? = null,
     val loggedIn: Boolean = false,
     val user: User? = null,
-    val message: String? = null   // para Snackbar one-shot (opcional)
+    val message: String? = null
 )
 
 class LoginViewModel(
@@ -26,6 +27,20 @@ class LoginViewModel(
 
     private val _ui = MutableStateFlow(LoginUiState())
     val ui: StateFlow<LoginUiState> = _ui
+
+    fun resetState() {
+        _ui.update {
+            LoginUiState(
+                email = "",
+                password = "",
+                loading = false,
+                error = null,
+                loggedIn = false,
+                user = null,
+                message = null
+            )
+        }
+    }
 
     fun onEmailChange(v: String)    = _ui.update { it.copy(email = v, error = null, message = null) }
     fun onPasswordChange(v: String) = _ui.update { it.copy(password = v, error = null, message = null) }
