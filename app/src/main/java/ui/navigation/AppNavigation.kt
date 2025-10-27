@@ -1,30 +1,36 @@
 package cl.duoc.level_up_mobile.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import cl.duoc.level_up_mobile.model.Producto
+import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.ui.screens.CatalogScreen
 import cl.duoc.level_up_mobile.ui.screens.CategoryProductsScreen
 import cl.duoc.level_up_mobile.ui.screens.HomeScreen
 import cl.duoc.level_up_mobile.ui.screens.ProductDetailScreen
 import cl.duoc.level_up_mobile.ui.screens.CartScreen
+import cl.duoc.level_up_mobile.ui.login.LoginScreen
+import cl.duoc.level_up_mobile.ui.signup.SignupScreen
 import androidx.compose.ui.unit.dp
+import cl.duoc.level_up_mobile.ui.screens.BlogScreen
+import cl.duoc.level_up_mobile.ui.screens.ContactoScreen
+import cl.duoc.level_up_mobile.repository.auth.AuthRepository
+import cl.duoc.level_up_mobile.ui.screens.ProfileScreen
 
 sealed class Screen {
     object Home : Screen()
@@ -32,6 +38,11 @@ sealed class Screen {
     object Catalog : Screen()
     data class CategoryProducts(val categoria: String) : Screen()
     object Cart : Screen()
+    object Login: Screen()
+    object Signup: Screen()
+    object Blog: Screen()
+    object Contact: Screen()
+    object Profile: Screen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,20 +55,29 @@ fun AppNavigation(
     currentScreen: Screen = Screen.Home,
     onScreenChange: (Screen) -> Unit = {},
     onMenuClick: () -> Unit,
-    onCartClick: () -> Unit
+    onCartClick: () -> Unit,
+    currentUser: User?,
+    onLoginRequired: () -> Unit,
+    authRepository: AuthRepository,
+    snackbarHostState: SnackbarHostState
 ) {
     val selectedProduct = remember { mutableStateOf<Producto?>(null) }
     val selectedCategory = remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    // Estado para el contador del carrito
-    val cartItemCount = produceState(initialValue = 0) {
+    val cartItemCount = produceState(
+        initialValue = 0,
+        key1 = currentUser
+    ) {
         carritoRepository.obtenerCarrito().collect { items ->
-            value = items.sumOf { it.cantidad }
+            val total = items.sumOf { it.cantidad }
+            value = total
         }
     }
-    // Función para mostrar mensajes
+
+    LaunchedEffect(currentUser) {
+        Log.d("AppNavigation", "👤 Estado usuario en navegación: ${currentUser?.email ?: "NO LOGUEADO"}")
+    }
+
     fun showSnackbar(message: String) {
         coroutineScope.launch {
             snackbarHostState.showSnackbar(
@@ -67,6 +87,26 @@ fun AppNavigation(
             )
         }
     }
+
+    fun requireLogin(action: () -> Unit) {
+        if (currentUser != null) {
+            action()
+        } else {
+            coroutineScope.launch {
+                val result = snackbarHostState.showSnackbar(
+                    message = "Debes iniciar sesión para continuar",
+                    actionLabel = "Iniciar Sesión",
+                    duration = SnackbarDuration.Long
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    onLoginRequired()
+                }
+            }
+        }
+    }
+
+    fun navigateToHome() = onScreenChange(Screen.Home)
+    fun navigateToLogin() = onScreenChange(Screen.Login)
 
     Scaffold(
         snackbarHost = {
@@ -83,18 +123,24 @@ fun AppNavigation(
                         productoRepository = productoRepository,
                         onMenuClick = onMenuClick,
                         onProductClick = { producto ->
-                            selectedProduct.value = producto
                             onScreenChange(Screen.ProductDetail(producto))
                         },
                         onCartClick = onCartClick,
                         context = context,
                         cartItemCount = cartItemCount.value,
                         onAddToCart = { producto ->
-                            coroutineScope.launch {
-                                carritoRepository.agregarProducto(producto, 1)
-                                showSnackbar("✅ ${producto.nombre} añadido al carrito")
+                            if (currentUser == null) {
+                                navigateToLogin()
+                                showSnackbar("nicia sesión para añadir productos al carrito")
+                            } else {
+                                coroutineScope.launch {
+                                    carritoRepository.agregarProducto(producto, 1)
+                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                }
                             }
-                        }
+                        },
+                        currentUser = currentUser,
+                        onLoginRequired = { navigateToLogin() }
                     )
                 }
 
@@ -103,13 +149,16 @@ fun AppNavigation(
                         producto = currentScreen.producto,
                         context = context,
                         carritoRepository = carritoRepository,
-                        onBackClick = {
-                            onScreenChange(Screen.Home)
-                        },
+                        onBackClick = { navigateToHome() },
                         onAddToCart = { producto ->
-                            coroutineScope.launch {
-                                carritoRepository.agregarProducto(producto, 1)
-                                showSnackbar("✅ ${producto.nombre} añadido al carrito")
+                            if (currentUser == null) {
+                                navigateToLogin()
+                                showSnackbar("nicia sesión para añadir productos al carrito")
+                            } else {
+                                coroutineScope.launch {
+                                    carritoRepository.agregarProducto(producto, 1)
+                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                }
                             }
                         }
                     )
@@ -120,21 +169,25 @@ fun AppNavigation(
                         categoria = currentScreen.categoria,
                         productoRepository = productoRepository,
                         context = context,
-                        onBackClick = {
-                            onScreenChange(Screen.Catalog)
-                        },
+                        onBackClick = { onScreenChange(Screen.Catalog) },
                         onProductClick = { producto ->
-                            selectedProduct.value = producto
                             onScreenChange(Screen.ProductDetail(producto))
                         },
                         onAddToCart = { producto ->
                             coroutineScope.launch {
-                                carritoRepository.agregarProducto(producto, 1)
-                                showSnackbar("✅ ${producto.nombre} añadido al carrito")
+                                if (currentUser == null) {
+                                    navigateToLogin()
+                                    showSnackbar("Inicia sesión para añadir productos al carrito")
+                                } else {
+                                    carritoRepository.agregarProducto(producto, 1)
+                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                }
                             }
                         },
                         onCartClick = onCartClick,
-                        cartItemCount = cartItemCount.value
+                        cartItemCount = cartItemCount.value,
+                        currentUser = currentUser,
+                        onLoginRequired = { navigateToLogin() }
                     )
                 }
 
@@ -142,16 +195,11 @@ fun AppNavigation(
                     CatalogScreen(
                         productoRepository = productoRepository,
                         context = context,
-                        onBackClick = {
-                            onScreenChange(Screen.Home)
-                        },
+                        onBackClick = { navigateToHome() },
                         onCategoryClick = { categoria ->
-                            selectedCategory.value = categoria
                             onScreenChange(Screen.CategoryProducts(categoria))
                         },
-                        onSearchClick = {
-                            // Podemos implementar búsqueda desde catálogo
-                        },
+                        onSearchClick = {},
                         onCartClick = onCartClick,
                         cartItemCount = cartItemCount.value
                     )
@@ -161,12 +209,58 @@ fun AppNavigation(
                     CartScreen(
                         carritoRepository = carritoRepository,
                         context = context,
-                        onBackClick = {
-                            onScreenChange(Screen.Home)
-                        },
+                        onBackClick = { navigateToHome() },
                         onCheckoutClick = {
-                            println("Proceder al pago")
-                        }
+                            requireLogin {
+                                showSnackbar("Procediendo al pago para ${currentUser?.email}...")
+                            }
+                        },
+                        currentUser = currentUser,
+                        onLoginRequired = { navigateToLogin() }
+                    )
+                }
+
+                is Screen.Login -> {
+                    LoginScreen(
+                        onBack = { navigateToHome() },
+                        onLoginSuccess = {
+                            navigateToHome()
+                            showSnackbar("¡Bienvenido ${currentUser?.email}!")
+                        },
+                        currentUser = currentUser,
+                        onNavigateToSignup = { onScreenChange(Screen.Signup) }
+                    )
+                }
+
+                is Screen.Signup -> {
+                    SignupScreen(
+                        onSignupSuccess = {
+                            navigateToHome()
+                            showSnackbar("¡Cuenta creada exitosamente! Bienvenido ${currentUser?.email}")
+                        },
+                        onNavigateToLogin = { onScreenChange(Screen.Login) },
+                        authRepository = authRepository
+                    )
+                }
+
+                is Screen.Blog -> {
+                    BlogScreen(
+                        onBackClick = { navigateToHome() }
+                    )
+                }
+
+                is Screen.Contact -> {
+                    ContactoScreen(
+                        onBackClick = { navigateToHome() }
+                    )
+                }
+
+                is Screen.Profile -> {
+                    ProfileScreen(
+                        context = context,
+                        currentUser = currentUser,
+                        onBackClick = { navigateToHome() },
+                        onShowSnackbar = { message -> showSnackbar(message) }
                     )
                 }
             }

@@ -2,6 +2,7 @@ package cl.duoc.level_up_mobile.repository.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -14,7 +15,6 @@ class FirebaseAuthDataSource(
                 .addOnSuccessListener { cont.resume(it.user) }
                 .addOnFailureListener { cont.resume(null) }
         }
-
 
     suspend fun signUp(email: String, pass: String): FirebaseUser? =
         suspendCancellableCoroutine { cont ->
@@ -30,6 +30,22 @@ class FirebaseAuthDataSource(
                 .addOnFailureListener { cont.resume(false) }
         }
 
+    suspend fun updateProfile(displayName: String?, photoUrl: String?): Boolean =
+        suspendCancellableCoroutine { cont ->
+            val user = auth.currentUser
+            if (user != null) {
+                val profileUpdates = UserProfileChangeRequest.Builder().apply {
+                    displayName?.let { setDisplayName(it) }
+                    photoUrl?.let { setPhotoUri(android.net.Uri.parse(it)) }
+                }.build()
+
+                user.updateProfile(profileUpdates)
+                    .addOnSuccessListener { cont.resume(true) }
+                    .addOnFailureListener { cont.resume(false) }
+            } else {
+                cont.resume(false)
+            }
+        }
 
     fun currentUser(): FirebaseUser? = auth.currentUser
     fun signOut() = auth.signOut()
