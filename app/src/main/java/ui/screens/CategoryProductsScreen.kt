@@ -183,7 +183,7 @@ fun CategoryProductCard(
             Box(modifier = Modifier.fillMaxWidth()) {
                 if (imageBitmap != null) {
                     Image(
-                        bitmap = imageBitmap, // SIN .asImageBitmap() - ya debe ser ImageBitmap
+                        bitmap = imageBitmap,
                         contentDescription = producto.nombre,
                         modifier = Modifier
                             .fillMaxWidth()

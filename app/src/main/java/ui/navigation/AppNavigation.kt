@@ -31,6 +31,7 @@ import cl.duoc.level_up_mobile.ui.screens.BlogScreen
 import cl.duoc.level_up_mobile.ui.screens.ContactoScreen
 import cl.duoc.level_up_mobile.repository.auth.AuthRepository
 import cl.duoc.level_up_mobile.ui.screens.ProfileScreen
+import kotlinx.coroutines.delay
 
 sealed class Screen {
     object Home : Screen()
@@ -78,13 +79,29 @@ fun AppNavigation(
         Log.d("AppNavigation", "👤 Estado usuario en navegación: ${currentUser?.email ?: "NO LOGUEADO"}")
     }
 
-    fun showSnackbar(message: String) {
+    fun showSnackbar(
+        message: String,
+        actionLabel: String? = null,
+        customDurationMillis: Long? = null
+    ) {
         coroutineScope.launch {
-            snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = "OK",
-                duration = SnackbarDuration.Short
-            )
+            if (customDurationMillis != null) {
+                val job = launch {
+                    snackbarHostState.showSnackbar(
+                        message = message,
+                        actionLabel = actionLabel,
+                        duration = SnackbarDuration.Indefinite
+                    )
+                }
+                delay(customDurationMillis)
+                job.cancel()
+            } else {
+                snackbarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
     }
 
@@ -96,7 +113,7 @@ fun AppNavigation(
                 val result = snackbarHostState.showSnackbar(
                     message = "Debes iniciar sesión para continuar",
                     actionLabel = "Iniciar Sesión",
-                    duration = SnackbarDuration.Long
+                    duration = SnackbarDuration.Short
                 )
                 if (result == SnackbarResult.ActionPerformed) {
                     onLoginRequired()
@@ -131,11 +148,13 @@ fun AppNavigation(
                         onAddToCart = { producto ->
                             if (currentUser == null) {
                                 navigateToLogin()
-                                showSnackbar("nicia sesión para añadir productos al carrito")
+                                showSnackbar("Inicia sesión para añadir productos al carrito")
                             } else {
                                 coroutineScope.launch {
                                     carritoRepository.agregarProducto(producto, 1)
-                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                    showSnackbar("${producto.nombre} añadido al carrito",
+                                        customDurationMillis = 1000L
+                                    )
                                 }
                             }
                         },
@@ -153,11 +172,13 @@ fun AppNavigation(
                         onAddToCart = { producto ->
                             if (currentUser == null) {
                                 navigateToLogin()
-                                showSnackbar("nicia sesión para añadir productos al carrito")
+                                showSnackbar("Inicia sesión para añadir productos al carrito")
                             } else {
                                 coroutineScope.launch {
                                     carritoRepository.agregarProducto(producto, 1)
-                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                    showSnackbar("${producto.nombre} añadido al carrito",
+                                        customDurationMillis = 1000L
+                                    )
                                 }
                             }
                         }
@@ -180,7 +201,10 @@ fun AppNavigation(
                                     showSnackbar("Inicia sesión para añadir productos al carrito")
                                 } else {
                                     carritoRepository.agregarProducto(producto, 1)
-                                    showSnackbar("${producto.nombre} añadido al carrito")
+                                    showSnackbar(
+                                        "${producto.nombre} añadido al carrito",
+                                        customDurationMillis = 1000L
+                                    )
                                 }
                             }
                         },
@@ -220,6 +244,19 @@ fun AppNavigation(
                     )
                 }
 
+                is Screen.Blog -> {
+                    BlogScreen(
+                        onBackClick = { navigateToHome() }
+
+                    )
+                }
+
+                is Screen.Contact -> {
+                    ContactoScreen(
+                        onBackClick = { navigateToHome() }
+                    )
+                }
+
                 is Screen.Login -> {
                     LoginScreen(
                         onBack = { navigateToHome() },
@@ -240,18 +277,6 @@ fun AppNavigation(
                         },
                         onNavigateToLogin = { onScreenChange(Screen.Login) },
                         authRepository = authRepository
-                    )
-                }
-
-                is Screen.Blog -> {
-                    BlogScreen(
-                        onBackClick = { navigateToHome() }
-                    )
-                }
-
-                is Screen.Contact -> {
-                    ContactoScreen(
-                        onBackClick = { navigateToHome() }
                     )
                 }
 

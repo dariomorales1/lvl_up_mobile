@@ -1,4 +1,3 @@
-// AuthStateManager.kt
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

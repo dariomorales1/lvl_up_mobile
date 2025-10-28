@@ -23,6 +23,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -65,6 +66,8 @@ fun MainDrawer(
             listOf(
                 DrawerItem("Inicio", Icons.Default.Home, "inicio"),
                 DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
+                DrawerItem("Blog", Icons.Default.Interests, "blog"),
+                DrawerItem("Contacto", Icons.Default.Contacts, "contacto"),
                 DrawerItem("Iniciar Sesión", Icons.Default.Login, "login"),
                 DrawerItem("Registrarse", Icons.Default.PersonAdd, "signup")
             )
@@ -152,6 +155,27 @@ fun MainDrawer(
                                 onItemClick(item.route)
                             }
                         }
+                    )
+                }
+                //Version y copyright
+                Spacer(modifier = Modifier.weight(1f))
+                Divider(modifier = Modifier.padding(horizontal = 16.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "Versión 1.0.0",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+
+                    )
+                    Text(
+                        "© 2025 Level-Up Gamer",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

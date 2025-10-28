@@ -40,6 +40,10 @@ import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
 import cl.duoc.level_up_mobile.utils.ImageLoader
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.painterResource
+import cl.duoc.level_up_mobile.R
+import cl.duoc.level_up_mobile.ui.theme.Gold
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +91,7 @@ fun HomeScreen(
                     onCartClick = onCartClick,
                     onSearchClick = { isSearchActive = true },
                     cartItemCount = cartItemCount,
-                    currentUser = currentUser // NUEVO
+                    currentUser = currentUser
                 )
             }
         }
@@ -159,7 +163,7 @@ fun HomeScreen(
                         }
                     },
                     context = context,
-                    currentUser = currentUser // NUEVO
+                    currentUser = currentUser
                 )
             }
         }
@@ -187,7 +191,7 @@ fun ProductosGrid(
                 context = context,
                 onAddToCart = onAddToCart,
                 onClick = { onProductClick(producto) },
-                currentUser = currentUser // NUEVO
+                currentUser = currentUser
             )
         }
     }
@@ -259,7 +263,7 @@ fun ProductoCard(
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "Rating",
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = Gold,
                             modifier = Modifier.size(12.dp)
                         )
                         Text(
@@ -350,12 +354,21 @@ fun NormalTopBar(
     CenterAlignedTopAppBar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_xhdpi),
+                    contentDescription = "Logo de Level-Up Gamer",
+                    modifier = Modifier.size(35.dp)
+                )
+
+                Spacer(modifier = Modifier.width(15.dp))
+
+
+
                 Text("Level-Up Gamer")
                 currentUser?.let {
                     Badge(
                         modifier = Modifier.padding(start = 8.dp),
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                     ) {
                         Text(
                             "✓",

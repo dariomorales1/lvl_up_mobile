@@ -91,7 +91,6 @@ fun ProductDetailScreen(
                     Button(
                         onClick = {
                             coroutineScope.launch {
-                                carritoRepository.agregarProducto(producto, 1)
                                 onAddToCart(producto)
                             }
                         },
