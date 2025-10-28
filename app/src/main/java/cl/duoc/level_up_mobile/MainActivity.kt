@@ -88,6 +88,8 @@ class MainActivity : ComponentActivity() {
                         is Screen.Home -> "inicio"
                         is Screen.Catalog -> "catalogo"
                         is Screen.Cart -> "carrito"
+                        is Screen.Blog -> "blog"
+                        is Screen.Contact -> "contacto"
                         is Screen.Login -> "login"
                         is Screen.Signup -> "signup"
                         else -> "inicio"
@@ -100,6 +102,8 @@ class MainActivity : ComponentActivity() {
                             "inicio" -> currentScreen = Screen.Home
                             "catalogo" -> currentScreen = Screen.Catalog
                             "carrito" -> currentScreen = Screen.Cart
+                            "blog" -> currentScreen = Screen.Blog
+                            "contacto" -> currentScreen = Screen.Contact
                             "login" ->  currentScreen = Screen.Login
                             "signup" -> currentScreen = Screen.Signup
                             "perfil" -> currentScreen = Screen.Profile

@@ -13,7 +13,7 @@ import cl.duoc.level_up_mobile.ui.navigation.Contacto
 @Composable
 fun ContactoScreen(onBackClick: () -> Unit) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope() // 👈 usamos coroutine scope
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {

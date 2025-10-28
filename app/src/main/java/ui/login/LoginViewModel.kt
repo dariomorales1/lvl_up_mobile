@@ -1,6 +1,5 @@
 package cl.duoc.level_up_mobile.ui.login
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -17,7 +17,6 @@ data class Producto(
     @SerializedName("Comentarios") val comentarios: List<String>,
     @SerializedName("imgLink") val imagenUrl: String
 )
-// Clase para el response del JSON
 data class ProductoJsonResponse(
     val productos: List<Producto>
 )

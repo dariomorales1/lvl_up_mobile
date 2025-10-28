@@ -83,7 +83,6 @@ fun Contacto(
                             mensaje.text.length >= 10
                     if (ok) {
                         onSend(nombre.text, correo.text, mensaje.text)
-                        // Limpia después de enviar
                         nombre = TextFieldValue("")
                         correo = TextFieldValue("")
                         mensaje = TextFieldValue("")
