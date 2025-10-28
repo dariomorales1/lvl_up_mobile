@@ -66,6 +66,9 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,6 +148,8 @@ fun ProfileScreen(
         }
     }
 
+    lateinit var startCameraFunc: () -> Unit
+
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
@@ -162,7 +167,7 @@ fun ProfileScreen(
                 onShowSnackbar("Error al cargar la imagen")
             }
         } else {
-            onShowSnackbar("Error al tomar la foto")
+            //onShowSnackbar("Error al tomar la foto")
         }
         isLoading = false
 
@@ -178,26 +183,48 @@ fun ProfileScreen(
         }
     }
 
-    fun startCamera() {
-        isLoading = true
-        try {
-            val tempFile = createTempImageFile(context)
-            if (tempFile != null) {
-                val photoUri = androidx.core.content.FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.provider",
-                    tempFile
-                )
-                profileImageUri = photoUri
-                cameraLauncher.launch(photoUri)
-            } else {
-                onShowSnackbar("Error al crear archivo temporal")
-                isLoading = false
-            }
-        } catch (e: Exception) {
-            onShowSnackbar("Error: ${e.message ?: "No se pudo abrir la cámara"}")
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startCameraFunc()
+            //permissionAlreadyGranted(permissionAlreadyGranted = true)
+        } else {
+            onShowSnackbar("Permiso de cámara denegado.")
             isLoading = false
-            e.printStackTrace()
+        }
+    }
+
+    startCameraFunc = {
+        isLoading = true
+
+        val hasPermission = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (hasPermission) {
+            try {
+                val tempFile = createTempImageFile(context)
+                if (tempFile != null) {
+                    val photoUri = androidx.core.content.FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.provider",
+                        tempFile
+                    )
+                    profileImageUri = photoUri
+                    cameraLauncher.launch(photoUri)
+                } else {
+                    onShowSnackbar("Error al crear archivo temporal")
+                    isLoading = false
+                }
+            } catch (e: Exception) {
+                onShowSnackbar("Error: ${e.message ?: "No se pudo abrir la cámara"}")
+                isLoading = false
+                e.printStackTrace()
+            }
+        } else {
+            permissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
@@ -280,7 +307,7 @@ fun ProfileScreen(
                 FloatingActionButton(
                     onClick = {
                         if (!isLoading) {
-                            startCamera()
+                            startCameraFunc()
                         }
                     },
                     modifier = Modifier
