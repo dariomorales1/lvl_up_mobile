@@ -56,6 +56,8 @@ fun MainDrawer(
             listOf(
                 DrawerItem("Inicio", Icons.Default.Home, "inicio"),
                 DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
+                DrawerItem("Blog", Icons.Default.Interests, "blog"),
+                DrawerItem("Contacto", Icons.Default.Contacts, "contacto"),
                 DrawerItem("Favoritos", Icons.Default.Favorite, "favoritos", showComingSoon = true),
                 DrawerItem("Historial", Icons.Default.History, "historial", showComingSoon = true),
                 DrawerItem("Mi Perfil", Icons.Default.Person, "perfil"),
