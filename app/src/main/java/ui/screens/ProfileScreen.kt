@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import android.graphics.Matrix
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -68,7 +69,9 @@ import java.util.Date
 import java.util.Locale
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.ExifInterface
 import androidx.core.content.ContextCompat
+import android.os.Build
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,6 +84,45 @@ fun ProfileScreen(
     var profileImageUri by remember { mutableStateOf<Uri?>(null) }
     var profileBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var isLoading by remember { mutableStateOf(false) }
+
+
+
+    fun rotateBitmapIfRequired(bitmap: Bitmap, uri: Uri): Bitmap {
+        return try {
+            val input = context.contentResolver.openInputStream(uri)
+            val exif = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ExifInterface(input!!)
+            } else {
+                ExifInterface(uri.path!!)
+            }
+            input?.close()
+
+            val orientation = exif.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
+            )
+
+            val rotationDegrees = when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                else -> 0
+            }
+
+            if (rotationDegrees != 0) {
+                val matrix = Matrix()
+                matrix.postRotate(rotationDegrees.toFloat())
+                Bitmap.createBitmap(
+                    bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+                )
+            } else {
+                bitmap
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            bitmap
+        }
+    }
 
     fun getProfileImageFile(context: Context): File {
         val storageDir = File(context.filesDir, "profile_images")
@@ -156,9 +198,11 @@ fun ProfileScreen(
         if (success && profileImageUri != null) {
             val bitmap = loadBitmapFromUri(profileImageUri!!)
             if (bitmap != null) {
+                val rotatedBitmap = rotateBitmapIfRequired(bitmap, profileImageUri!!)
+
                 val permanentFile = getProfileImageFile(context)
-                if (saveBitmapToFile(bitmap, permanentFile)) {
-                    profileBitmap = bitmap
+                if (saveBitmapToFile(rotatedBitmap, permanentFile)) {
+                    profileBitmap = rotatedBitmap
                     onShowSnackbar("Foto de perfil guardada")
                 } else {
                     onShowSnackbar("Error al guardar la imagen")
