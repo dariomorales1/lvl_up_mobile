@@ -108,8 +108,10 @@ class MainActivity : ComponentActivity() {
                             "signup" -> currentScreen = Screen.Signup
                             "perfil" -> currentScreen = Screen.Profile
                             "logout" -> {
-                                FirebaseAuth.getInstance().signOut()
-                                currentScreen = Screen.Home
+                                scope.launch {
+                                    authRepository.logout()
+                                    currentScreen = Screen.Home
+                                }
                             }
                         }
                     },

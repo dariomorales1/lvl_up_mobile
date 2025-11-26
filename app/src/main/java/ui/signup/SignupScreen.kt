@@ -27,6 +27,9 @@ fun SignupScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var displayName by remember { mutableStateOf("") }
+    var birthDate by remember { mutableStateOf("") } // yyyy-MM-dd
+    var acceptedTerms by remember { mutableStateOf(false) }
+
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
@@ -35,6 +38,7 @@ fun SignupScreen(
     LaunchedEffect(uiState) {
         if (uiState is SignupUiState.Success) {
             onSignupSuccess()
+            viewModel.resetState()
         }
     }
 
@@ -107,6 +111,29 @@ fun SignupScreen(
             )
 
             OutlinedTextField(
+                value = birthDate,
+                onValueChange = { birthDate = it },
+                label = { Text("Fecha de nacimiento (YYYY-MM-DD)") },
+                leadingIcon = {
+                    Icon(Icons.Default.Cake, contentDescription = "Fecha de nacimiento")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                singleLine = true
+            )
+
+            Text(
+                text = "**Debes ser mayor de edad (18 años o más) para registrarte**",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+            OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Contraseña") },
@@ -146,11 +173,28 @@ fun SignupScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 24.dp),
+                    .padding(bottom = 16.dp),
                 visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 singleLine = true
             )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = acceptedTerms,
+                    onCheckedChange = { acceptedTerms = it }
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Acepto los términos y condiciones",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
 
             if (uiState is SignupUiState.Error) {
                 Card(
@@ -182,7 +226,14 @@ fun SignupScreen(
 
             Button(
                 onClick = {
-                    viewModel.signUp(email, password, confirmPassword, displayName)
+                    viewModel.signUp(
+                        email = email,
+                        password = password,
+                        confirmPassword = confirmPassword,
+                        displayName = displayName,
+                        birthDate = birthDate,
+                        acceptedTerms = acceptedTerms
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
