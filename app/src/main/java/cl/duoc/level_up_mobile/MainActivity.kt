@@ -1,6 +1,7 @@
 package cl.duoc.level_up_mobile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,35 +12,41 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
+
+import cl.duoc.level_up_mobile.model.User
+import cl.duoc.level_up_mobile.repository.auth.AuthRepository
 import cl.duoc.level_up_mobile.repository.carrito.CarritoRepository
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
 import cl.duoc.level_up_mobile.ui.navigation.AppNavigation
 import cl.duoc.level_up_mobile.ui.navigation.MainDrawer
 import cl.duoc.level_up_mobile.ui.navigation.Screen
 import cl.duoc.level_up_mobile.ui.theme.LevelUp_MobileTheme
-import kotlinx.coroutines.launch
-import com.google.firebase.auth.FirebaseAuth
-import cl.duoc.level_up_mobile.model.User
-import android.util.Log
-import cl.duoc.level_up_mobile.repository.auth.AuthRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val productoRepository = ProductoRepository(this)
+        // Repos que dependen de Context los creo fuera de Compose
         val carritoRepository = CarritoRepository(this)
         val authRepository = AuthRepository()
 
         setContent {
             LevelUp_MobileTheme {
+
+                // 🔹 ProductoRepository ahora usa el MS de productos vía RetrofitClient
+                val productoRepository = remember { ProductoRepository() }
+
                 val drawerState = rememberDrawerState(androidx.compose.material3.DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
                 val snackbarHostState = remember { SnackbarHostState() }
 
+                // ==============================
+                // 🔹 Estado de usuario actual (Firebase + modelo User)
+                // ==============================
                 val currentUser by produceState<User?>(
                     initialValue = null,
                     key1 = Unit
@@ -47,11 +54,19 @@ class MainActivity : ComponentActivity() {
                     val authStateListener = FirebaseAuth.AuthStateListener { auth ->
                         val firebaseUser = auth.currentUser
                         val user = firebaseUser?.let {
-                            User(uid = it.uid, email = it.email ?: "", displayName = it.displayName ?: "")
+                            User(
+                                uid = it.uid,
+                                email = it.email ?: "",
+                                displayName = it.displayName ?: ""
+                            )
                         }
 
-                        Log.d("AuthDebug", "🔄 AuthState: ${firebaseUser?.email ?: "null"}")
+                        Log.d(
+                            "AuthDebug",
+                            "🔄 AuthState: ${firebaseUser?.email ?: "null"}"
+                        )
 
+                        // Si el usuario se loguea y antes era guest, transferimos carrito
                         if (firebaseUser != null && value == null) {
                             scope.launch {
                                 carritoRepository.transferirCarritoGuestAUsuario(firebaseUser.uid)
@@ -68,11 +83,13 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
+                // ==============================
+                // 🔹 Navegación principal
+                // ==============================
                 var currentScreen by remember {
                     mutableStateOf<Screen>(Screen.Home)
                 }
 
-                // Controlar cuándo forzar el login
                 var shouldForceLogin by remember { mutableStateOf(false) }
 
                 LaunchedEffect(shouldForceLogin) {
@@ -92,6 +109,7 @@ class MainActivity : ComponentActivity() {
                         is Screen.Contact -> "contacto"
                         is Screen.Login -> "login"
                         is Screen.Signup -> "signup"
+                        is Screen.Profile -> "perfil"
                         else -> "inicio"
                     },
                     currentUser = currentUser,
@@ -104,7 +122,7 @@ class MainActivity : ComponentActivity() {
                             "carrito" -> currentScreen = Screen.Cart
                             "blog" -> currentScreen = Screen.Blog
                             "contacto" -> currentScreen = Screen.Contact
-                            "login" ->  currentScreen = Screen.Login
+                            "login" -> currentScreen = Screen.Login
                             "signup" -> currentScreen = Screen.Signup
                             "perfil" -> currentScreen = Screen.Profile
                             "logout" -> {
@@ -132,7 +150,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         AppNavigation(
                             context = this@MainActivity,
-                            productoRepository = productoRepository,
+                            productoRepository = productoRepository, // 👈 ya apunta al MS de productos
                             carritoRepository = carritoRepository,
                             drawerState = drawerState,
                             currentScreen = currentScreen,
@@ -141,7 +159,8 @@ class MainActivity : ComponentActivity() {
                             },
                             onMenuClick = {
                                 scope.launch {
-                                    if (drawerState.isClosed) drawerState.open() else drawerState.close()
+                                    if (drawerState.isClosed) drawerState.open()
+                                    else drawerState.close()
                                 }
                             },
                             onCartClick = {

@@ -1,39 +1,81 @@
+// cl/duoc/level_up_mobile/repository/productos/ProductoRepository.kt
 package cl.duoc.level_up_mobile.repository.productos
 
-import android.content.Context
+import cl.duoc.level_up_mobile.data.remote.core.RetrofitClient
+import cl.duoc.level_up_mobile.data.remote.product.ProductApi
+import cl.duoc.level_up_mobile.data.remote.product.dto.ProductResponse
 import cl.duoc.level_up_mobile.model.Producto
+import java.text.NumberFormat
+import java.util.Locale
 
-class ProductoRepository(private val context: Context) {
+class ProductoRepository(
+    private val api: ProductApi = RetrofitClient.retrofit.create(ProductApi::class.java)
+) {
 
-    private val jsonLoader = JsonProductLoader(context)
-
-    fun obtenerTodosLosProductos(): List<Producto> {
-        return jsonLoader.cargarProductosDesdeJson()
+    private fun formatPrecio(precio: Double?): String {
+        if (precio == null) return "$0"
+        val nf = NumberFormat.getCurrencyInstance(Locale("es", "CL"))
+        return nf.format(precio)
     }
 
-    fun obtenerProductosDestacados(): List<Producto> {
-        // Usa los primeros 8 productos como destacados
-        return jsonLoader.cargarProductosDesdeJson().take(8)
-    }
+    private fun mapToDomain(dto: ProductResponse): Producto? {
+        val codigo = dto.codigo ?: return null
+        val nombre = dto.nombre ?: return null
+        val descripcionCorta = dto.descripcionCorta ?: ""
+        val descripcionLarga = dto.descripcionLarga ?: ""
+        val categoria = dto.categoria ?: "Sin categoría"
+        val imagenUrl = dto.imagenUrl ?: ""
+        val precio = formatPrecio(dto.precio)
 
-    fun obtenerProductoPorCodigo(codigo: String): Producto? {
-        return jsonLoader.obtenerProductoPorCodigo(codigo)
-    }
-
-    fun obtenerProductosPorCategoria(categoria: String): List<Producto> {
-        return jsonLoader.obtenerProductosPorCategoria(categoria)
-    }
-
-    fun obtenerTodasLasCategorias(): List<String> {
-        return jsonLoader.obtenerTodasLasCategorias()
-    }
-
-    fun buscarProductos(query: String): List<Producto> {
-        val productos = jsonLoader.cargarProductosDesdeJson()
-        return productos.filter {
-            it.nombre.contains(query, ignoreCase = true) ||
-                    it.descripcionCorta.contains(query, ignoreCase = true) ||
-                    it.categoria.contains(query, ignoreCase = true)
+        val puntuacion = if (!dto.resenas.isNullOrEmpty()) {
+            val ratings = dto.resenas.mapNotNull { it.rating?.toDouble() }
+            if (ratings.isNotEmpty()) {
+                val avg = ratings.average()
+                String.format(Locale.US, "%.1f", avg)
+            } else {
+                "5.0"
+            }
+        } else {
+            "5.0"
         }
+
+        return Producto(
+            codigo = codigo,
+            nombre = nombre,
+            descripcionCorta = descripcionCorta,
+            descripcionLarga = descripcionLarga,
+            categoria = categoria,
+            imagenUrl = imagenUrl,
+            precio = precio,
+            puntuacion = puntuacion
+        )
+    }
+
+    // ========== MÉTODOS PÚBLICOS QUE USARÁ LA UI ==========
+
+    suspend fun obtenerTodosLosProductos(): List<Producto> {
+        return try {
+            val res = api.getAllProducts()
+            if (res.isSuccessful) {
+                res.body()
+                    .orEmpty()
+                    .mapNotNull { mapToDomain(it) }
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
+    suspend fun obtenerProductosPorCategoria(categoria: String): List<Producto> {
+        val todos = obtenerTodosLosProductos()
+        return todos.filter { it.categoria.equals(categoria, ignoreCase = true) }
+    }
+
+    suspend fun obtenerTodasLasCategorias(): List<String> {
+        val todos = obtenerTodosLosProductos()
+        return todos.map { it.categoria }.distinct()
     }
 }
