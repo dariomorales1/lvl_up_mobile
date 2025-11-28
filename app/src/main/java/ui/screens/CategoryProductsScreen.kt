@@ -2,18 +2,15 @@ package cl.duoc.level_up_mobile.ui.screens
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.foundation.background
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,14 +20,14 @@ import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.model.Producto
 import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
-import cl.duoc.level_up_mobile.utils.ImageLoader
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryProductsScreen(
     categoria: String,
     productoRepository: ProductoRepository,
-    context: Context,
+    context: Context, // ya no lo usamos, pero lo dejamos para no romper llamadas externas
     onBackClick: () -> Unit,
     onProductClick: (Producto) -> Unit,
     onAddToCart: (Producto) -> Unit,
@@ -39,10 +36,30 @@ fun CategoryProductsScreen(
     currentUser: User? = null,
     onLoginRequired: () -> Unit = {}
 ) {
-    val productosCategoria = productoRepository.obtenerProductosPorCategoria(categoria)
+    var productosCategoria by remember { mutableStateOf<List<Producto>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    // 🔹 Cargar productos de la categoría desde el MS
+    LaunchedEffect(categoria) {
+        try {
+            isLoading = true
+            errorMessage = null
+            productosCategoria = productoRepository.obtenerProductosPorCategoria(categoria)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            errorMessage = "Error al cargar productos de $categoria"
+        } finally {
+            isLoading = false
+        }
+    }
+
+    // Solo para debug de usuario
     LaunchedEffect(currentUser) {
-        Log.d("CategoryProducts", "Usuario en CategoryProducts: ${currentUser?.email ?: "NO LOGUEADO"}")
+        Log.d(
+            "CategoryProducts",
+            "Usuario en CategoryProducts: ${currentUser?.email ?: "NO LOGUEADO"}"
+        )
     }
 
     Scaffold(
@@ -50,11 +67,19 @@ fun CategoryProductsScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Column {
-                        Text(categoria, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                        Text("${productosCategoria.size} productos", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            categoria,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            "${productosCategoria.size} productos",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                         currentUser?.email?.let { email ->
                             Text(
-                                "${email}",
+                                email,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -94,35 +119,70 @@ fun CategoryProductsScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            if (productosCategoria.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "No hay productos en esta categoría",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+            when {
+                isLoading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                errorMessage != null -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            errorMessage ?: "Error desconocido",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+
+                productosCategoria.isEmpty() -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "No hay productos en esta categoría",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                else -> {
+                    CategoryProductsGrid(
+                        productos = productosCategoria,
+                        onProductClick = onProductClick,
+                        onAddToCart = { producto ->
+                            if (currentUser == null) {
+                                Log.d(
+                                    "CategoryProducts",
+                                    "Usuario no logueado, requiriendo login"
+                                )
+                                onLoginRequired()
+                            } else {
+                                Log.d(
+                                    "CategoryProducts",
+                                    "Usuario logueado, añadiendo producto: ${producto.nombre}"
+                                )
+                                onAddToCart(producto)
+                            }
+                        },
+                        currentUser = currentUser
                     )
                 }
-            } else {
-                CategoryProductsGrid(
-                    productos = productosCategoria,
-                    onProductClick = onProductClick,
-                    onAddToCart = { producto ->
-                        if (currentUser == null) {
-                            Log.d("CategoryProducts", "Usuario no logueado, requiriendo login")
-                            onLoginRequired()
-                        } else {
-                            Log.d("CategoryProducts", "Usuario logueado, añadiendo producto: ${producto.nombre}")
-                            onAddToCart(producto)
-                        }
-                    },
-                    context = context,
-                    currentUser = currentUser
-                )
             }
         }
     }
@@ -133,7 +193,6 @@ fun CategoryProductsGrid(
     productos: List<Producto>,
     onProductClick: (Producto) -> Unit,
     onAddToCart: (Producto) -> Unit,
-    context: Context,
     currentUser: User?
 ) {
     LazyVerticalGrid(
@@ -146,7 +205,6 @@ fun CategoryProductsGrid(
         items(productos) { producto ->
             CategoryProductCard(
                 producto = producto,
-                context = context,
                 onAddToCart = onAddToCart,
                 onClick = { onProductClick(producto) },
                 currentUser = currentUser
@@ -158,15 +216,10 @@ fun CategoryProductsGrid(
 @Composable
 fun CategoryProductCard(
     producto: Producto,
-    context: Context,
     onAddToCart: (Producto) -> Unit,
     onClick: () -> Unit,
     currentUser: User?
 ) {
-    val imageBitmap = remember(producto.imagenUrl) {
-        ImageLoader.loadImageFromAssets(context, producto.imagenUrl)
-    }
-
     Card(
         onClick = onClick,
         modifier = Modifier
@@ -181,32 +234,17 @@ fun CategoryProductCard(
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                if (imageBitmap != null) {
-                    Image(
-                        bitmap = imageBitmap,
-                        contentDescription = producto.nombre,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(140.dp),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(140.dp)
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            Icons.Default.Image,
-                            contentDescription = "Sin imagen",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(40.dp)
-                        )
-                    }
-                }
+                // 🔹 Imagen desde URL usando Coil
+                AsyncImage(
+                    model = producto.imagenUrl,
+                    contentDescription = producto.nombre,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(140.dp),
+                    contentScale = ContentScale.Crop
+                )
 
+                // Badge de rating
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
@@ -265,14 +303,17 @@ fun CategoryProductCard(
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 0.9
+                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 0.9f
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(
                     onClick = {
-                        Log.d("CategoryProductCard", "Botón presionado - Usuario: ${currentUser?.email ?: "NO LOGUEADO"}")
+                        Log.d(
+                            "CategoryProductCard",
+                            "Botón presionado - Usuario: ${currentUser?.email ?: "NO LOGUEADO"}"
+                        )
                         onAddToCart(producto)
                     },
                     modifier = Modifier.fillMaxWidth(),

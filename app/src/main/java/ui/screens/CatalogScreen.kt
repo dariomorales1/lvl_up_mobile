@@ -11,13 +11,18 @@ import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
+
+private data class CategoriaInfo(
+    val nombre: String,
+    val productCount: Int
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +35,36 @@ fun CatalogScreen(
     onCartClick: () -> Unit,
     cartItemCount: Int
 ) {
-    val todasLasCategorias = productoRepository.obtenerTodasLasCategorias()
+    var categorias by remember { mutableStateOf<List<CategoriaInfo>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    // 🔹 Cargar productos desde el MS y agrupar por categoría
+    LaunchedEffect(Unit) {
+        try {
+            isLoading = true
+            errorMessage = null
+
+            val productos = productoRepository.obtenerTodosLosProductos()
+
+            val agrupadas = productos
+                .groupBy { it.categoria }
+                .map { (categoria, listaProductos) ->
+                    CategoriaInfo(
+                        nombre = categoria,
+                        productCount = listaProductos.size
+                    )
+                }
+                .sortedBy { it.nombre }
+
+            categorias = agrupadas
+        } catch (e: Exception) {
+            e.printStackTrace()
+            errorMessage = "Error al cargar el catálogo. Intenta nuevamente."
+        } finally {
+            isLoading = false
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -73,34 +107,65 @@ fun CatalogScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            item {
-                Text(
-                    "Todas las Categorías",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(
-                    "Explora nuestra completa selección de productos gamers",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+
+        when {
+            isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
 
-            items(todasLasCategorias) { categoria ->
-                CategoryCard(
-                    categoria = categoria,
-                    productCount = productoRepository.obtenerProductosPorCategoria(categoria).size,
-                    onClick = { onCategoryClick(categoria) }
-                )
+            errorMessage != null -> {
+                Box(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = errorMessage ?: "Error desconocido",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+
+            else -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    item {
+                        Text(
+                            "Todas las Categorías",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                        Text(
+                            "Explora nuestra completa selección de productos gamers",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+                    }
+
+                    items(categorias) { categoriaInfo ->
+                        CategoryCard(
+                            categoria = categoriaInfo.nombre,
+                            productCount = categoriaInfo.productCount,
+                            onClick = { onCategoryClick(categoriaInfo.nombre) }
+                        )
+                    }
+                }
             }
         }
     }

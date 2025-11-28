@@ -1,18 +1,17 @@
 package cl.duoc.level_up_mobile.ui.screens
 
 import android.content.Context
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,25 +20,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.model.Producto
 import cl.duoc.level_up_mobile.repository.carrito.CarritoRepository
-import cl.duoc.level_up_mobile.utils.ImageLoader
-import androidx.compose.runtime.rememberCoroutineScope
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
     producto: Producto,
-    context: Context,
-    carritoRepository: CarritoRepository,
+    context: Context,                // ya no lo usamos, pero lo dejamos para no romper llamadas
+    carritoRepository: CarritoRepository, // idem, lo mantengo aunque no se use
     onBackClick: () -> Unit,
     onAddToCart: (Producto) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-
-    val imageBitmap = remember(producto.imagenUrl) {
-        ImageLoader.loadImageFromAssets(context, producto.imagenUrl)
-    }
 
     Scaffold(
         topBar = {
@@ -124,10 +117,10 @@ fun ProductDetailScreen(
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
         ) {
-            // Imagen principal
-            if (imageBitmap != null) {
-                Image(
-                    bitmap = imageBitmap,
+            // 🔹 Imagen principal desde URL (Supabase / backend)
+            if (producto.imagenUrl.isNotBlank()) {
+                AsyncImage(
+                    model = producto.imagenUrl,
                     contentDescription = producto.nombre,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -167,7 +160,8 @@ fun ProductDetailScreen(
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
-                            "${producto.puntuacion}/10",
+                            "${producto.puntuacion}/5",
+                            // antes decía /10, pero tu puntuación viene de 1–5
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(start = 4.dp),
                             fontWeight = FontWeight.Medium
@@ -192,7 +186,7 @@ fun ProductDetailScreen(
                 Text(
                     producto.descripcionLarga,
                     style = MaterialTheme.typography.bodyMedium,
-                    lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2
+                    lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2f
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

@@ -1,15 +1,12 @@
 package cl.duoc.level_up_mobile.ui.screens
 
 import android.content.Context
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddShoppingCart
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,11 +18,7 @@ import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,13 +31,12 @@ import androidx.compose.ui.unit.sp
 import cl.duoc.level_up_mobile.model.Producto
 import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
-import cl.duoc.level_up_mobile.utils.ImageLoader
 import androidx.compose.foundation.background
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.res.painterResource
 import cl.duoc.level_up_mobile.R
 import cl.duoc.level_up_mobile.ui.theme.Gold
-
-
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,23 +45,57 @@ fun HomeScreen(
     onMenuClick: () -> Unit,
     onProductClick: (Producto) -> Unit,
     onCartClick: () -> Unit,
-    context: Context,
+    context: Context, // ya no lo usamos, pero lo dejamos para no romper firmas
     cartItemCount: Int,
     onAddToCart: (Producto) -> Unit,
     currentUser: User?,
     onLoginRequired: () -> Unit
 ) {
-    val productosDestacados = productoRepository.obtenerProductosDestacados()
+    var allProducts by remember { mutableStateOf<List<Producto>>(emptyList()) }
+    var productosDestacados by remember { mutableStateOf<List<Producto>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
 
-    val productosFiltrados = remember(searchQuery, productosDestacados) {
-        if (searchQuery.isEmpty()) {
-            productosDestacados
-        } else {
-            productoRepository.buscarProductos(searchQuery)
+    // 🔹 Cargar productos desde el ms y calcular “primeros por categoría”
+    LaunchedEffect(Unit) {
+        try {
+            isLoading = true
+            errorMessage = null
+
+            val productos = productoRepository.obtenerTodosLosProductos()
+            allProducts = productos
+
+            // Igual que el Home de React: tomar el primer producto por categoría
+            val primerosPorCategoria = productos
+                .groupBy { it.categoria }
+                .mapNotNull { (_, lista) -> lista.firstOrNull() }
+
+            productosDestacados = primerosPorCategoria
+        } catch (e: Exception) {
+            e.printStackTrace()
+            errorMessage = "Error al cargar productos destacados"
+        } finally {
+            isLoading = false
         }
+    }
+
+    // 🔹 Filtrado: si hay búsqueda → filtra sobre todos; si no → destacados
+    val productosFiltrados by remember(searchQuery, allProducts, productosDestacados) {
+        mutableStateOf(
+            if (searchQuery.isBlank()) {
+                productosDestacados
+            } else {
+                val query = searchQuery.trim().lowercase()
+                allProducts.filter { p ->
+                    p.nombre.lowercase().contains(query) ||
+                            p.descripcionCorta.lowercase().contains(query) ||
+                            p.categoria.lowercase().contains(query)
+                }
+            }
+        )
     }
 
     Scaffold(
@@ -110,61 +136,90 @@ fun HomeScreen(
                 )
             }
 
-            if (searchQuery.isNotEmpty()) {
-                Text(
-                    "🔍 Resultados para \"$searchQuery\"",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(16.dp)
-                )
-            } else {
-                Text(
-                    "⭐ Productos Destacados",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+            when {
+                isLoading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
 
-            if (searchQuery.isNotEmpty() && productosFiltrados.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            Icons.Filled.SearchOff,
-                            contentDescription = "Sin resultados",
-                            modifier = Modifier.size(64.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
+                errorMessage != null -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Text(
-                            "No se encontraron productos",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Text(
-                            "Intenta con otros términos",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = errorMessage ?: "Error desconocido",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.error
                         )
                     }
                 }
-            } else {
-                ProductosGrid(
-                    productos = productosFiltrados,
-                    onProductClick = onProductClick,
-                    onAddToCart = { producto ->
-                        if (currentUser == null) {
-                            onLoginRequired()
-                        } else {
-                            onAddToCart(producto)
+
+                else -> {
+                    if (searchQuery.isNotEmpty()) {
+                        Text(
+                            "🔍 Resultados para \"$searchQuery\"",
+                            style = MaterialTheme.typography.headlineSmall,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    } else {
+                        Text(
+                            "⭐ Productos Destacados",
+                            style = MaterialTheme.typography.headlineSmall,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                    if (searchQuery.isNotEmpty() && productosFiltrados.isEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(32.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(
+                                    Icons.Filled.SearchOff,
+                                    contentDescription = "Sin resultados",
+                                    modifier = Modifier.size(64.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    "No se encontraron productos",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Text(
+                                    "Intenta con otros términos",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
-                    },
-                    context = context,
-                    currentUser = currentUser
-                )
+                    } else {
+                        ProductosGrid(
+                            productos = productosFiltrados,
+                            onProductClick = onProductClick,
+                            onAddToCart = { producto ->
+                                if (currentUser == null) {
+                                    onLoginRequired()
+                                } else {
+                                    onAddToCart(producto)
+                                }
+                            },
+                            currentUser = currentUser
+                        )
+                    }
+                }
             }
         }
     }
@@ -175,7 +230,6 @@ fun ProductosGrid(
     productos: List<Producto>,
     onProductClick: (Producto) -> Unit,
     onAddToCart: (Producto) -> Unit,
-    context: Context,
     currentUser: User?
 ) {
     LazyVerticalGrid(
@@ -188,7 +242,6 @@ fun ProductosGrid(
         items(productos) { producto ->
             ProductoCard(
                 producto = producto,
-                context = context,
                 onAddToCart = onAddToCart,
                 onClick = { onProductClick(producto) },
                 currentUser = currentUser
@@ -200,15 +253,10 @@ fun ProductosGrid(
 @Composable
 fun ProductoCard(
     producto: Producto,
-    context: Context,
     onAddToCart: (Producto) -> Unit,
     onClick: () -> Unit,
     currentUser: User?
 ) {
-    val imageBitmap = remember(producto.imagenUrl) {
-        ImageLoader.loadImageFromAssets(context, producto.imagenUrl)
-    }
-
     Card(
         onClick = onClick,
         modifier = Modifier
@@ -223,9 +271,10 @@ fun ProductoCard(
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                if (imageBitmap != null) {
-                    Image(
-                        bitmap = imageBitmap,
+                if (producto.imagenUrl.isNotBlank()) {
+                    // 🔹 Imagen desde URL (Supabase / backend)
+                    AsyncImage(
+                        model = producto.imagenUrl,
                         contentDescription = producto.nombre,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -307,7 +356,7 @@ fun ProductoCard(
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 0.9
+                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 0.9f
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -361,8 +410,6 @@ fun NormalTopBar(
                 )
 
                 Spacer(modifier = Modifier.width(15.dp))
-
-
 
                 Text("Level-Up Gamer")
                 currentUser?.let {
