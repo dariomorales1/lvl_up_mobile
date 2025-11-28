@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -19,21 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.model.Producto
-import cl.duoc.level_up_mobile.repository.carrito.CarritoRepository
 import coil.compose.AsyncImage
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
     producto: Producto,
-    context: Context,                // ya no lo usamos, pero lo dejamos para no romper llamadas
-    carritoRepository: CarritoRepository, // idem, lo mantengo aunque no se use
+    context: Context,                // 👈 lo puedes borrar si quieres, ya no se usa
     onBackClick: () -> Unit,
     onAddToCart: (Producto) -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -82,11 +76,7 @@ fun ProductDetailScreen(
                     }
 
                     Button(
-                        onClick = {
-                            coroutineScope.launch {
-                                onAddToCart(producto)
-                            }
-                        },
+                        onClick = { onAddToCart(producto) },
                         modifier = Modifier
                             .weight(1f)
                             .height(56.dp),
@@ -161,7 +151,6 @@ fun ProductDetailScreen(
                         )
                         Text(
                             "${producto.puntuacion}/5",
-                            // antes decía /10, pero tu puntuación viene de 1–5
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(start = 4.dp),
                             fontWeight = FontWeight.Medium
@@ -191,31 +180,33 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Text(
-                    "Especificaciones",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Column {
-                    producto.especificaciones.forEach { especificacion ->
-                        Row(
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        ) {
-                            Text(
-                                "• ",
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                especificacion,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                if (producto.especificaciones.isNotEmpty()) {
+                    Text(
+                        "Especificaciones",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Column {
+                        producto.especificaciones.forEach { especificacion ->
+                            Row(
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            ) {
+                                Text(
+                                    "• ",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    especificacion,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
 
                 Text(
                     "Stock disponible: ${producto.stock} unidades",

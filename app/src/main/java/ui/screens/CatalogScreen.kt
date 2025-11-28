@@ -66,6 +66,7 @@ fun CatalogScreen(
         }
     }
 
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
