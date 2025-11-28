@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.model.User
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
 
 data class DrawerItem(
     val title: String,
@@ -58,6 +59,7 @@ fun MainDrawer(
                 DrawerItem("Catálogo", Icons.Default.Category, "catalogo"),
                 DrawerItem("Blog", Icons.Default.Interests, "blog"),
                 DrawerItem("Contacto", Icons.Default.Contacts, "contacto"),
+                DrawerItem("Mis Direcciones", Icons.Default.LocationOn, "direcciones"),
                 DrawerItem("Favoritos", Icons.Default.Favorite, "favoritos", showComingSoon = true),
                 DrawerItem("Historial", Icons.Default.History, "historial", showComingSoon = true),
                 DrawerItem("Mi Perfil", Icons.Default.Person, "perfil"),

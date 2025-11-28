@@ -2,6 +2,7 @@ package cl.duoc.level_up_mobile.repository.user
 
 import cl.duoc.level_up_mobile.data.remote.core.RetrofitClient
 import cl.duoc.level_up_mobile.data.remote.user.UserApi
+import cl.duoc.level_up_mobile.data.remote.user.dto.DireccionRequest
 import cl.duoc.level_up_mobile.data.remote.user.dto.DireccionResponse
 import cl.duoc.level_up_mobile.data.remote.user.dto.UsuarioRequest
 import cl.duoc.level_up_mobile.data.remote.user.dto.UsuarioResponse
@@ -31,6 +32,36 @@ class UserRepository(
         } catch (e: Exception) {
             e.printStackTrace()
             emptyList()
+        }
+    }
+
+    suspend fun createAddress(request: DireccionRequest): DireccionResponse? {
+        return try {
+            val res = api.createAddress(request)
+            if (res.isSuccessful) res.body() else null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun updateAddress(id: Long, request: DireccionRequest): DireccionResponse? {
+        return try {
+            val res = api.updateAddress(id, request)
+            if (res.isSuccessful) res.body() else null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun deleteAddress(id: Long): Boolean {
+        return try {
+            val res = api.deleteAddress(id)
+            res.isSuccessful
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
     }
 

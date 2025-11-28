@@ -352,6 +352,14 @@ fun AppNavigation(
                         onShowSnackbar = { message -> showSnackbar(message) }
                     )
                 }
+
+                // NUEVA PANTALLA DE DIRECCIONES
+                is Screen.Address -> {
+                    AddressScreen(
+                        onBackClick = { navigateToHome() },
+                        onShowSnackbar = { message -> showSnackbar(message) }
+                    )
+                }
             }
         }
     }

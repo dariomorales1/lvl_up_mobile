@@ -91,9 +91,9 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                MainDrawer(
-                    drawerState = drawerState,
-                    currentRoute = when (currentScreen) {
+                // Función para obtener la ruta actual
+                fun getCurrentRoute(): String {
+                    return when (currentScreen) {
                         is Screen.Home -> "inicio"
                         is Screen.Catalog -> "catalogo"
                         is Screen.Cart -> "carrito"
@@ -102,8 +102,14 @@ class MainActivity : ComponentActivity() {
                         is Screen.Login -> "login"
                         is Screen.Signup -> "signup"
                         is Screen.Profile -> "perfil"
+                        is Screen.Address -> "direcciones" // NUEVO
                         else -> "inicio"
-                    },
+                    }
+                }
+
+                MainDrawer(
+                    drawerState = drawerState,
+                    currentRoute = getCurrentRoute(),
                     currentUser = currentUser,
                     onItemClick = { route ->
                         scope.launch { drawerState.close() }
@@ -114,6 +120,7 @@ class MainActivity : ComponentActivity() {
                             "carrito" -> currentScreen = Screen.Cart
                             "blog" -> currentScreen = Screen.Blog
                             "contacto" -> currentScreen = Screen.Contact
+                            "direcciones" -> currentScreen = Screen.Address // NUEVO
                             "login" -> currentScreen = Screen.Login
                             "signup" -> currentScreen = Screen.Signup
                             "perfil" -> currentScreen = Screen.Profile
@@ -121,6 +128,10 @@ class MainActivity : ComponentActivity() {
                                 scope.launch {
                                     authRepository.logout()
                                     currentScreen = Screen.Home
+                                    snackbarHostState.showSnackbar(
+                                        message = "¡Hasta pronto!",
+                                        duration = SnackbarDuration.Short
+                                    )
                                 }
                             }
                         }

@@ -74,7 +74,7 @@ class ProfileViewModel(
                     nombre = user.nombre ?: "",
                     email = user.email ?: "",
                     fechaNacimiento = user.fechaNacimiento ?: "",
-                    avatarUrl = user.avatarUrl,
+                    avatarUrl = user.avatarUrl, // IMPORTANTE: Esto estaba faltando
                     direccion = if (first != null) {
                         buildString {
                             append(first.calle.orEmpty())
@@ -162,7 +162,7 @@ class ProfileViewModel(
                         nombre = updated.nombre ?: it.nombre,
                         fechaNacimiento = updated.fechaNacimiento ?: it.fechaNacimiento,
                         email = updated.email ?: it.email,
-                        avatarUrl = updated.avatarUrl ?: it.avatarUrl,
+                        avatarUrl = updated.avatarUrl ?: it.avatarUrl, // IMPORTANTE: Actualizar avatarUrl
                         message = "Perfil actualizado correctamente"
                     )
                 }
@@ -193,7 +193,7 @@ class ProfileViewModel(
             _uiState.update {
                 it.copy(
                     loading = false,
-                    avatarUrl = updated.avatarUrl ?: it.avatarUrl,
+                    avatarUrl = updated.avatarUrl ?: it.avatarUrl, // IMPORTANTE: Actualizar avatarUrl
                     message = "Avatar actualizado correctamente"
                 )
             }
@@ -220,7 +220,7 @@ class ProfileViewModel(
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        avatarUrl = updated.avatarUrl ?: "",
+                        avatarUrl = updated.avatarUrl ?: "", // IMPORTANTE: Limpiar avatarUrl
                         message = "Avatar eliminado correctamente"
                     )
                 }
