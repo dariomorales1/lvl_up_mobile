@@ -1,5 +1,6 @@
 package cl.duoc.level_up_mobile.repository.productos
 
+import android.util.Log
 import cl.duoc.level_up_mobile.data.remote.core.RetrofitClient
 import cl.duoc.level_up_mobile.data.remote.product.ProductApi
 import cl.duoc.level_up_mobile.data.remote.product.dto.ProductResponse
@@ -10,6 +11,8 @@ import java.util.Locale
 class ProductoRepository(
     private val api: ProductApi = RetrofitClient.retrofit.create(ProductApi::class.java)
 ) {
+
+    private val TAG = "ProductoRepository"
 
     // =========================
     // Helpers privados
@@ -30,7 +33,6 @@ class ProductoRepository(
         val imagenUrl = dto.imagenUrl ?: ""
         val precio = formatPrecio(dto.precio)
 
-        // 🔹 Promedio de puntuación desde las reseñas (Resena.puntuacion)
         val puntuacion = if (!dto.resenas.isNullOrEmpty()) {
             val valores = dto.resenas.mapNotNull { it.puntuacion?.toDouble() }
             if (valores.isNotEmpty()) {
@@ -43,18 +45,16 @@ class ProductoRepository(
             "5.0"
         }
 
-        // 🔹 Especificaciones (ProductSpecification.specification)
         val especificaciones = dto.especificaciones
             ?.mapNotNull { it.specification }
             ?: emptyList()
 
-        // 🔹 Comentarios desde reseñas (opcional con nombre de usuario)
         val comentarios = dto.resenas
             ?.mapNotNull { resena ->
                 resena.comentario?.let { comentario ->
-                    val nombre = resena.usuarioNombre
-                    if (!nombre.isNullOrBlank()) {
-                        "$nombre: $comentario"
+                    val nombreUser = resena.usuarioNombre
+                    if (!nombreUser.isNullOrBlank()) {
+                        "$nombreUser: $comentario"
                     } else {
                         comentario
                     }
@@ -77,26 +77,35 @@ class ProductoRepository(
         )
     }
 
-    // Cache simple en memoria para no pegarle al ms a cada rato
+    // Cache simple en memoria
     private var cacheProductos: List<Producto>? = null
 
     private suspend fun getOrLoadProductos(): List<Producto> {
-        // Si ya hay cache, la usamos
-        cacheProductos?.let { return it }
+        cacheProductos?.let {
+            Log.d(TAG, "Usando cache: ${it.size} productos")
+            return it
+        }
 
         return try {
+            Log.d(TAG, "Llamando a GET /products/ ...")
             val res = api.getAllProducts()
+            Log.d(TAG, "Respuesta HTTP: ${res.code()}")
+
             if (res.isSuccessful) {
-                val lista = res.body()
+                val body = res.body()
+                Log.d(TAG, "Body recibido: ${body?.size ?: 0} productos")
+                val lista = body
                     .orEmpty()
                     .mapNotNull { mapToDomain(it) }
+                Log.d(TAG, "Mapeados a dominio: ${lista.size} productos")
                 cacheProductos = lista
                 lista
             } else {
+                Log.e(TAG, "Error en respuesta: code=${res.code()}, errorBody=${res.errorBody()?.string()}")
                 emptyList()
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Excepción al llamar a productos", e)
             emptyList()
         }
     }
@@ -105,24 +114,20 @@ class ProductoRepository(
     // Métodos públicos para la UI
     // =========================
 
-    /** Todos los productos del catálogo */
     suspend fun obtenerTodosLosProductos(): List<Producto> {
         return getOrLoadProductos()
     }
 
-    /** Productos filtrados por categoría (case-insensitive) */
     suspend fun obtenerProductosPorCategoria(categoria: String): List<Producto> {
         val productos = getOrLoadProductos()
         return productos.filter { it.categoria.equals(categoria, ignoreCase = true) }
     }
 
-    /** Todas las categorías distintas presentes en el catálogo */
     suspend fun obtenerTodasLasCategorias(): List<String> {
         val productos = getOrLoadProductos()
         return productos.map { it.categoria }.distinct()
     }
 
-    /** Buscar productos por nombre / descripción corta / categoría */
     suspend fun buscarProductos(query: String): List<Producto> {
         if (query.isBlank()) return emptyList()
         val q = query.trim().lowercase()
@@ -134,19 +139,15 @@ class ProductoRepository(
         }
     }
 
-    /**
-     * “Destacados”: primer producto por categoría.
-     * Es la misma lógica que usaste en el Home de React.
-     */
     suspend fun obtenerProductosDestacados(): List<Producto> {
         val productos = getOrLoadProductos()
-
-        return productos
+        val destacados = productos
             .groupBy { it.categoria }
             .mapNotNull { (_, lista) -> lista.firstOrNull() }
+        Log.d(TAG, "Destacados: ${destacados.size} productos")
+        return destacados
     }
 
-    /** Por si alguna vez quieres refrescar a mano */
     fun limpiarCache() {
         cacheProductos = null
     }

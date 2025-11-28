@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 import cl.duoc.level_up_mobile.model.User
 import cl.duoc.level_up_mobile.repository.auth.AuthRepository
-import cl.duoc.level_up_mobile.repository.carrito.CarritoRepository
+import cl.duoc.level_up_mobile.repository.carrito.CartRepositoryRemote
 import cl.duoc.level_up_mobile.repository.productos.ProductoRepository
 import cl.duoc.level_up_mobile.ui.navigation.AppNavigation
 import cl.duoc.level_up_mobile.ui.navigation.MainDrawer
@@ -30,17 +30,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Repos que dependen de Context los creo fuera de Compose
-        val carritoRepository = CarritoRepository(this)
-        val authRepository = AuthRepository()
-
         setContent {
             LevelUp_MobileTheme {
 
-                // 🔹 ProductoRepository ahora usa el MS de productos vía RetrofitClient
                 val productoRepository = remember { ProductoRepository() }
+                val cartRepository = remember { CartRepositoryRemote() }
+                val authRepository = remember { AuthRepository() }
 
-                val drawerState = rememberDrawerState(androidx.compose.material3.DrawerValue.Closed)
+                val drawerState = rememberDrawerState(
+                    initialValue = androidx.compose.material3.DrawerValue.Closed
+                )
                 val scope = rememberCoroutineScope()
                 val snackbarHostState = remember { SnackbarHostState() }
 
@@ -65,13 +64,6 @@ class MainActivity : ComponentActivity() {
                             "AuthDebug",
                             "🔄 AuthState: ${firebaseUser?.email ?: "null"}"
                         )
-
-                        // Si el usuario se loguea y antes era guest, transferimos carrito
-                        if (firebaseUser != null && value == null) {
-                            scope.launch {
-                                carritoRepository.transferirCarritoGuestAUsuario(firebaseUser.uid)
-                            }
-                        }
 
                         value = user
                     }
@@ -150,8 +142,8 @@ class MainActivity : ComponentActivity() {
                     ) {
                         AppNavigation(
                             context = this@MainActivity,
-                            productoRepository = productoRepository, // 👈 ya apunta al MS de productos
-                            carritoRepository = carritoRepository,
+                            productoRepository = productoRepository,
+                            cartRepository = cartRepository,      // 👈 ahora repo remoto
                             drawerState = drawerState,
                             currentScreen = currentScreen,
                             onScreenChange = { newScreen ->
