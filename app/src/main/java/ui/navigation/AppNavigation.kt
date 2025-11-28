@@ -44,6 +44,8 @@ sealed class Screen {
     object Blog: Screen()
     object Contact: Screen()
     object Profile: Screen()
+
+    object Address: Screen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -286,6 +288,13 @@ fun AppNavigation(
                         currentUser = currentUser,
                         onBackClick = { navigateToHome() },
                         onShowSnackbar = { message -> showSnackbar(message) }
+                    )
+                }
+
+                is Screen.Address -> {
+                    AddressScreen(
+                        onBackClick = { onScreenChange(Screen.Profile) },
+                        onShowSnackbar = { showSnackbar(it) }
                     )
                 }
             }

@@ -1,7 +1,7 @@
 package cl.duoc.level_up_mobile.data.remote.user.dto
 
 data class DireccionResponse(
-    val id: Long?,
+    val id: Long,
     val alias: String?,
     val calle: String?,
     val numero: String?,
