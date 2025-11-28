@@ -134,6 +134,7 @@ fun ProfileScreen(
     currentUser: User?,
     onBackClick: () -> Unit,
     onShowSnackbar: (String) -> Unit
+    // QUITADO: onNavigateToAddress ya no se necesita aquí
 ) {
     // ViewModel scopiado por usuario (clave = uid)
     val vm: ProfileViewModel = viewModel(
@@ -375,13 +376,15 @@ fun ProfileScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
+                    // DIRECCIÓN PRINCIPAL - SOLO LECTURA (QUITADO EL BOTÓN DE EDICIÓN)
                     OutlinedTextField(
                         value = state.direccion,
                         enabled = false,
                         onValueChange = {},
-                        label = { Text("Dirección (primera registrada)") },
+                        label = { Text("Dirección principal") },
                         leadingIcon = { Icon(Icons.Default.Home, null) },
                         modifier = Modifier.fillMaxWidth()
+                        // QUITADO: trailingIcon con botón de edición
                     )
 
                     Row(
@@ -454,7 +457,10 @@ fun ProfileScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                )
             ) {
                 Icon(Icons.Default.Logout, null)
                 Spacer(Modifier.width(8.dp))

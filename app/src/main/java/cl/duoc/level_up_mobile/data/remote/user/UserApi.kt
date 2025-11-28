@@ -18,6 +18,22 @@ interface UserApi {
     @GET("/users/me/direcciones")
     suspend fun getMyAddresses(): Response<List<DireccionResponse>>
 
+    @POST("/users/me/direcciones")
+    suspend fun createAddress(
+        @Body body: DireccionRequest
+    ): Response<DireccionResponse>
+
+    @PUT("/users/me/direcciones/{id}")
+    suspend fun updateAddress(
+        @Path("id") id: Long,
+        @Body body: DireccionRequest
+    ): Response<DireccionResponse>
+
+    @DELETE("/users/me/direcciones/{id}")
+    suspend fun deleteAddress(
+        @Path("id") id: Long
+    ): Response<Void>
+
     @PUT("/users/{id}")
     suspend fun updateUser(
         @Path("id") id: String,

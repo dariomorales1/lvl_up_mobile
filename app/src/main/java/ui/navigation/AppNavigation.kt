@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import cl.duoc.level_up_mobile.model.Producto
 import cl.duoc.level_up_mobile.model.User
@@ -26,12 +27,12 @@ import cl.duoc.level_up_mobile.ui.screens.ProductDetailScreen
 import cl.duoc.level_up_mobile.ui.screens.CartScreen
 import cl.duoc.level_up_mobile.ui.login.LoginScreen
 import cl.duoc.level_up_mobile.ui.signup.SignupScreen
-import androidx.compose.ui.unit.dp
 import cl.duoc.level_up_mobile.ui.screens.BlogScreen
 import cl.duoc.level_up_mobile.ui.screens.ContactoScreen
 import cl.duoc.level_up_mobile.repository.auth.AuthRepository
 import cl.duoc.level_up_mobile.ui.screens.ProfileScreen
 import kotlinx.coroutines.delay
+import cl.duoc.level_up_mobile.ui.screens.address.AddressScreen
 
 sealed class Screen {
     object Home : Screen()
@@ -44,6 +45,7 @@ sealed class Screen {
     object Blog: Screen()
     object Contact: Screen()
     object Profile: Screen()
+    object Address: Screen() // NUEVO
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -247,7 +249,6 @@ fun AppNavigation(
                 is Screen.Blog -> {
                     BlogScreen(
                         onBackClick = { navigateToHome() }
-
                     )
                 }
 
@@ -284,6 +285,14 @@ fun AppNavigation(
                     ProfileScreen(
                         context = context,
                         currentUser = currentUser,
+                        onBackClick = { navigateToHome() },
+                        onShowSnackbar = { message -> showSnackbar(message) }
+                    )
+                }
+
+                // NUEVA PANTALLA DE DIRECCIONES
+                is Screen.Address -> {
+                    AddressScreen(
                         onBackClick = { navigateToHome() },
                         onShowSnackbar = { message -> showSnackbar(message) }
                     )
