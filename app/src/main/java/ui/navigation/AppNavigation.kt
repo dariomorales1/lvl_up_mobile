@@ -36,6 +36,8 @@ import cl.duoc.level_up_mobile.ui.screens.ProfileScreen
 import cl.duoc.level_up_mobile.ui.signup.SignupScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import cl.duoc.level_up_mobile.ui.screens.address.AddressScreen
+
 
 // ===========================
 // 🔹 Definición de pantallas
@@ -51,6 +53,8 @@ sealed class Screen {
     object Blog : Screen()
     object Contact : Screen()
     object Profile : Screen()
+
+    object Address : Screen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,38 +1,158 @@
-# Level-Up Gamer 🎮
+📘 LevelUP Gamer – Aplicación Móvil
 
-¡Bienvenido a Level-Up Gamer, la aplicación móvil definitiva para entusiastas de los videojuegos! Creada con las últimas tecnologías de Android, esta app ofrece una experiencia de compra fluida y una plataforma para que la comunidad gamer se conecte.
+Plataforma móvil enfocada en la experiencia de compra gamer, construida en Kotlin + Jetpack Compose, con integración a microservicios propios, Firebase Authentication y un sistema de carrito robusto.
+Proyecto académico desarrollado para demostrar el uso de arquitectura moderna en Android, consumo de APIs, manejo de estado y UI declarativa.
 
-## ✨ Características Principales
+🧑‍💻 Integrantes
+Rol	Nombre
+Desarrollador Android	Felipe Ulloa
+Desarrollador Android	Darío Morales
 
-*   **🏠 Inicio Dinámico**: Descubre los productos más nuevos y las ofertas destacadas.
-*   **🛒 Catálogo de Productos**: Explora nuestro extenso catálogo de juegos, hardware y accesorios, organizados por categorías.
-*   **🔍 Búsqueda Inteligente**: Encuentra exactamente lo que buscas con filtros y sugerencias.
-*   **👤 Gestión de Usuario**: Sistema completo de inicio de sesión, registro y gestión de perfiles de usuario.
-*   **🛍️ Carrito de Compras Persistente**: Tu carrito se guarda en tu cuenta para que puedas continuar tus compras en cualquier momento.
-*   **✍️ Sección de Blog**: Lee las últimas noticias, reseñas y artículos de la comunidad gamer.
-*   **🎨 Tema Oscuro Estilizado**: Una interfaz moderna y atractiva, optimizada para una experiencia visual inmersiva.
-
-## 🛠️ Tecnologías Utilizadas
-
-Este proyecto fue construido utilizando un stack 100% moderno de desarrollo Android:
-
-*   **Lenguaje**: [Kotlin](https://kotlinlang.org/)
-*   **UI Toolkit**: [Jetpack Compose](https://developer.android.com/jetpack/compose) para una interfaz de usuario declarativa y reactiva.
-*   **Arquitectura**:
-    *   **MVVM** (Model-View-ViewModel) para una separación clara de responsabilidades.
-    *   Patrón de **Repositorio** para abstraer las fuentes de datos.
-*   **Navegación**: Navegación basada en estado de Compose, gestionada de forma centralizada.
-*   **Asincronía**: [Coroutines de Kotlin](https://kotlinlang.org/docs/coroutines-overview.html) para manejar operaciones en segundo plano de manera eficiente.
-*   **Base de Datos / Backend**: [Firebase Firestore](https://firebase.google.com/products/firestore) para la gestión de productos, usuarios y carrito de compras en tiempo real.
-*   **Autenticación**: [Firebase Authentication](https://firebase.google.com/products/auth) para el registro e inicio de sesión de usuarios.
-*   **Inyección de Dependencias**: (Si la usas, por ejemplo: Hilt, Koin)
-*   **Material Design 3**: Para componentes de UI modernos y personalizables.
-
-## 🚀 Cómo Empezar
-
-Para clonar y ejecutar este proyecto localmente, necesitarás Android Studio y seguir estos pasos:
-
-1.  **Clona el repositorio:**
+🏗️ Tecnologías Principales
 
 
-🤝 ContribucionesLas contribuciones son siempre bienvenidas. Si tienes ideas para mejorar la app, por favor, abre un issue para discutir tu propuesta o envía un pull request.
+Android Studio Flamingo o superior
+Kotlin 1.9+
+Gradle 8+
+Emulador o dispositivo Android 8.0+
+Archivo google-services.json configurado
+Interceptor personalizado para JWT
+
+
+🎮 Descripción General
+
+LevelUP Gamer es una aplicación móvil que permite navegar un catálogo de productos gamers, gestionar un carrito de compras, almacenar direcciones de envío, administrar sesión de usuario y explorar contenidos adicionales como blog y contacto.
+
+Incluye:
+
+UI completamente construida en Jetpack Compose
+Consumo de microservicio backend real
+Autenticación híbrida: Firebase + Tokens JWT
+Carrito persistente por usuario
+Sistema de navegación personalizado con Drawer
+Manejo de estado reactivo con StateFlow
+
+✨ Funcionalidades
+🔐 Autenticación
+
+✔ Inicio de sesión con Firebase
+✔ Registro con sincronización a backend
+✔ Refresh automático de tokens
+✔ Logout y limpieza de sesión
+
+🛍 Catálogo Gamer
+
+✔ Categorías dinámicas
+✔ Búsqueda inteligente
+✔ Productos destacados
+✔ Detalles completos (precio, rating, especificaciones, reseñas)
+
+🛒 Carrito de Compras
+
+✔ Agregar productos
+✔ Aumentar/disminuir cantidad
+✔ Eliminar productos
+✔ Limpiar carrito completo
+✔ Persistencia por usuario
+
+👤 Perfil y Direcciones
+
+✔ Mostrar perfil del usuario
+✔ CRUD de direcciones
+✔ Subida/eliminación de avatar
+
+📝 Blog
+
+✔ Lista de artículos mockeados
+✔ Filtros por categoría
+
+📩 Contacto
+
+✔ Formulario funcional
+✔ Validación + notificaciones mediante Snackbars
+
+🔗 Microservicios y Endpoints Consumidos
+🔐 Auth Service
+Método	Endpoint	Descripción
+POST	/auth/login	Login usando Firebase ID Token
+POST	/auth/refresh	Generar nuevo Access Token
+POST	/auth/logout	Cerrar sesión
+🧑‍💼 User Service
+Método	Endpoint
+POST	/users/public/register
+GET	/users/me
+GET	/users/me/direcciones
+POST	/users/me/direcciones
+PUT	/users/me/direcciones/{id}
+DELETE	/users/me/direcciones/{id}
+POST	/users/{id}/avatar
+DELETE	/users/{id}/avatar
+📦 Product Service
+Método	Endpoint
+GET	/products/
+GET	/products/{productCode}
+GET	/products/{productCode}/resenas
+🛒 Cart Service
+Método	Endpoint
+GET	/carts/user/{userId}
+POST	/carts/user/{userId}/items
+PUT	/carts/user/{userId}/items/{productId}
+DELETE	/carts/user/{userId}/items/{productId}
+DELETE	/carts/user/{userId}/clear
+🏛️ Arquitectura del Proyecto
+📦 app/
+┣ 📂 data/
+┃ ┣ 📂 remote/ → Retrofit, DTO, APIs
+┃ ┗ 📂 core/ → Interceptores, Cliente Retrofit
+┣ 📂 repository/ → Capa de acceso a datos
+┣ 📂 session/ → Manejo de tokens
+┣ 📂 model/ → Modelos de dominio
+┣ 📂 ui/ → Jetpack Compose Screens + ViewModels
+┗ MainActivity.kt → Punto de entrada
+
+
+Patrones implementados:
+
+MVVM
+Repository Pattern
+Clean Navigation (sin usar Navigation Compose)
+StateFlow para reactividad
+Mappers DTO → Dominio
+
+▶️ Cómo Ejecutar el Proyecto
+1️⃣ Clonar el repositorio
+git clone https://github.com/dariomorales1/lvl_up_mobile.git
+
+2️⃣ Abrir con Android Studio
+File → Open → seleccionar carpeta del proyecto
+
+3️⃣ Sincronizar Gradle
+Android Studio lo solicitará automáticamente.
+
+4️⃣ Configurar Firebase
+Colocar google-services.json en:
+app/google-services.json
+
+5️⃣ Ejecutar
+Seleccionar un emulador o dispositivo Android → Run ▶
+
+📱 Características de la UI
+
+✔ Modo oscuro por defecto
+✔ Tipografías personalizadas
+✔ Uso extensivo de Material 3
+✔ Comportamientos animados (buttons, drawer, snackbars)
+
+📌 Objetivo del Proyecto
+
+Este proyecto busca demostrar dominio en:
+
+Desarrollo móvil moderno (Compose)
+Arquitectura limpia y escalable
+Consumo seguro de APIs
+Manejo de sesión y tokens
+UI/UX profesional
+
+📄 Licencia
+
+Proyecto académico – uso exclusivo para fines educativos.

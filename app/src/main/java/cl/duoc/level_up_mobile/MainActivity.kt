@@ -24,6 +24,7 @@ import cl.duoc.level_up_mobile.ui.navigation.AppNavigation
 import cl.duoc.level_up_mobile.ui.navigation.MainDrawer
 import cl.duoc.level_up_mobile.ui.navigation.Screen
 import cl.duoc.level_up_mobile.ui.theme.LevelUp_MobileTheme
+import cl.duoc.level_up_mobile.ui.screens.address.AddressScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,7 +103,7 @@ class MainActivity : ComponentActivity() {
                         is Screen.Login -> "login"
                         is Screen.Signup -> "signup"
                         is Screen.Profile -> "perfil"
-                        is Screen.Address -> "direcciones" // NUEVO
+                        is Screen.Address -> "direcciones"
                         else -> "inicio"
                     }
                 }
@@ -120,7 +121,7 @@ class MainActivity : ComponentActivity() {
                             "carrito" -> currentScreen = Screen.Cart
                             "blog" -> currentScreen = Screen.Blog
                             "contacto" -> currentScreen = Screen.Contact
-                            "direcciones" -> currentScreen = Screen.Address // NUEVO
+                            "direcciones" -> currentScreen = Screen.Address
                             "login" -> currentScreen = Screen.Login
                             "signup" -> currentScreen = Screen.Signup
                             "perfil" -> currentScreen = Screen.Profile
